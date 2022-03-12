@@ -45,9 +45,7 @@ final class FileFamilyFunctionTypeSpecifyingExtension implements FunctionTypeSpe
 	public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
 	{
 		return in_array(strtolower($functionReflection->getName()), $this->fileFamilfy, true)
-			&& $context->true()
-			&& count($node->getArgs()) >= 1
-			&& $node->getArgs()[0]->value instanceof Variable;
+			&& $context->true();
 	}
 
 	public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
@@ -56,7 +54,7 @@ final class FileFamilyFunctionTypeSpecifyingExtension implements FunctionTypeSpe
 		$pathType = $scope->getType($args[0]->value);
 
 		$stringType = new StringType();
-		if ($stringType->isSuperTypeOf($pathType)->no()) {
+		if (!$stringType->isSuperTypeOf($pathType)->yes()) {
 			return new SpecifiedTypes();
 		}
 
