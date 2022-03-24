@@ -6,6 +6,17 @@ use function PHPStan\Testing\assertType;
 
 class Foo {
 	function fileFamilyVariants(string $file) {
+		if (stat($file)) {
+			assertType('non-empty-string', $file);
+		}
+		if (lstat($file)) {
+			assertType('non-empty-string', $file);
+		}
+
+		if (file_exists($file)) {
+			assertType('non-empty-string', $file);
+		}
+
 		if (is_readable($file)) {
 			assertType('non-empty-string', $file);
 		}
@@ -21,10 +32,6 @@ class Foo {
 			assertType('non-empty-string', $file);
 		}
 
-		if (is_link($file)) {
-			assertType('non-empty-string', $file);
-		}
-
 		if (is_file($file)) {
 			assertType('non-empty-string', $file);
 		}
@@ -33,7 +40,37 @@ class Foo {
 			assertType('non-empty-string', $file);
 		}
 
-		if (file_exists($file)) {
+		if (is_link($file)) {
+			assertType('non-empty-string', $file);
+		}
+
+		if (filectime($file)) {
+			assertType('non-empty-string', $file);
+		}
+		if (fileatime($file)) {
+			assertType('non-empty-string', $file);
+		}
+		if (filemtime($file)) {
+			assertType('non-empty-string', $file);
+		}
+
+		if (fileinode($file)) {
+			assertType('non-empty-string', $file);
+		}
+		if (filegroup($file)) {
+			assertType('non-empty-string', $file);
+		}
+		if (fileowner($file)) {
+			assertType('non-empty-string', $file);
+		}
+
+		if (filesize($file)) {
+			assertType('non-empty-string', $file);
+		}
+		if (filetype($file)) {
+			assertType('non-empty-string', $file);
+		}
+		if (fileperms($file)) {
 			assertType('non-empty-string', $file);
 		}
 
@@ -43,17 +80,6 @@ class Foo {
 		if ($handle = opendir($file, 'r')) {
 			assertType('non-empty-string', $file);
 		}
-
-		if (fileatime($file)) {
-			assertType('non-empty-string', $file);
-		}
-		if (filemtime($file)) {
-			assertType('non-empty-string', $file);
-		}
-		if (filectime($file)) {
-			assertType('non-empty-string', $file);
-		}
-
 		if (unlink($file)) {
 			assertType('non-empty-string', $file);
 		}

@@ -21,19 +21,27 @@ class FileFamilyFunctionsTypeSpecifyingExtension implements FunctionTypeSpecifyi
 
 	/** @var array<string, int> */
 	private array $fileFnArgPositions = [
+		'stat' => 0,
+		'lstat' => 0,
+		'file_exists' => 0,
 		'is_readable' => 0,
 		'is_writable' => 0,
 		'is_writeable' => 0,
 		'is_executable' => 0,
-		'is_link' => 0,
 		'is_file' => 0,
 		'is_dir' => 0,
-		'file_exists' => 0,
-		'fopen' => 0,
-		'opendir' => 0,
+		'is_link' => 0,
+		'filectime' => 0,
 		'fileatime' => 0,
 		'filemtime' => 0,
-		'filectime' => 0,
+		'fileinode' => 0,
+		'filegroup' => 0,
+		'fileowner' => 0,
+		'filesize' => 0,
+		'filetype' => 0,
+		'fileperms' => 0,
+		'fopen' => 0,
+		'opendir' => 0,
 		'unlink' => 0,
 	];
 
