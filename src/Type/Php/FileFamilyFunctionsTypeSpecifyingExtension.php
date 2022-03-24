@@ -69,7 +69,7 @@ class FileFamilyFunctionsTypeSpecifyingExtension implements FunctionTypeSpecifyi
 
 		return $this->typeSpecifier->create(
 			$fileNameArg,
-			TypeCombinator::intersect($fileNameType, new AccessoryNonEmptyStringType()),
+			new AccessoryNonEmptyStringType(),
 			$context,
 			false,
 			$scope,

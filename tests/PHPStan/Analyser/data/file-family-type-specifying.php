@@ -44,10 +44,6 @@ class Foo {
 			assertType('non-empty-string', $file);
 		}
 
-		if (file_exists($file)) {
-			assertType('non-empty-string', $file);
-		}
-
 		if (fileatime($file)) {
 			assertType('non-empty-string', $file);
 		}
