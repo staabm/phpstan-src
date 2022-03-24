@@ -1854,7 +1854,7 @@ return [
 'DirectoryIterator::setFileClass' => ['void', 'class_name='=>'string'],
 'DirectoryIterator::setInfoClass' => ['void', 'class_name='=>'string'],
 'DirectoryIterator::valid' => ['bool'],
-'dirname' => ['string', 'path'=>'string', 'levels='=>'positive-int'],
+'dirname' => ['non-empty-string', 'path'=>'string', 'levels='=>'positive-int'],
 'disk_free_space' => ['float|false', 'path'=>'string'],
 'disk_total_space' => ['float|false', 'path'=>'string'],
 'diskfreespace' => ['float|false', 'path'=>'string'],
