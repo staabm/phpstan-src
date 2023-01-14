@@ -465,6 +465,10 @@ class MutatingScope implements Scope
 	/** @api */
 	public function hasVariableType(string $variableName): TrinaryLogic
 	{
+		if ($this->isGlobalVariable($variableName)) {
+			return TrinaryLogic::createYes();
+		}
+
 		$varExprString = '$' . $variableName;
 		if (!isset($this->expressionTypes[$varExprString])) {
 			if ($this->canAnyVariableExist()) {
@@ -526,6 +530,21 @@ class MutatingScope implements Scope
 		}
 
 		return $variables;
+	}
+
+	private function isGlobalVariable(string $variableName): bool
+	{
+		return in_array($variableName, [
+			'GLOBALS',
+			'_SERVER',
+			'_GET',
+			'_POST',
+			'_FILES',
+			'_COOKIE',
+			'_SESSION',
+			'_REQUEST',
+			'_ENV',
+		], true);
 	}
 
 	/** @api */
