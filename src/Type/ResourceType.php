@@ -88,6 +88,12 @@ class ResourceType implements Type
 		return TrinaryLogic::createNo();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		// TODO implement Type::isResource()
+		return new BooleanType();
+	}
+
 	public function exponentiate(Type $exponent): Type
 	{
 		return new ErrorType();

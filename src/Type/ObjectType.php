@@ -1002,6 +1002,11 @@ class ObjectType implements TypeWithClassName, SubtractableType
 		return TrinaryLogic::createNo();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $type->isObject()->toBooleanType();
+	}
+
 	private function isExtraOffsetAccessibleClass(): TrinaryLogic
 	{
 		$classReflection = $this->getClassReflection();

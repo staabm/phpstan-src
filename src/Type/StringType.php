@@ -226,6 +226,11 @@ class StringType implements Type
 		return TrinaryLogic::createYes();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $type->isString()->toBooleanType();
+	}
+
 	public function hasMethod(string $methodName): TrinaryLogic
 	{
 		if ($this->isClassStringType()->yes()) {

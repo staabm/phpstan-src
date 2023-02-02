@@ -568,6 +568,17 @@ class UnionType implements CompoundType
 		return $this->unionResults(static fn (Type $type): TrinaryLogic => $type->isScalar());
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $this->unionResults(static function (Type $innerType) use ($type): TrinaryLogic {
+			$booleanType = $innerType->looseCompare($type);
+			if ($booleanType instanceof ConstantBooleanType) {
+				return TrinaryLogic::createFromBoolean($booleanType->getValue());
+			}
+			return TrinaryLogic::createMaybe();
+		})->toBooleanType();
+	}
+
 	public function isOffsetAccessible(): TrinaryLogic
 	{
 		return $this->unionResults(static fn (Type $type): TrinaryLogic => $type->isOffsetAccessible());

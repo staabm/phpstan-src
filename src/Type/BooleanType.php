@@ -118,6 +118,11 @@ class BooleanType implements Type
 		return TrinaryLogic::createYes();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $type->isBoolean()->toBooleanType();
+	}
+
 	public function tryRemove(Type $typeToRemove): ?Type
 	{
 		if ($typeToRemove instanceof ConstantBooleanType) {

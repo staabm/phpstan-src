@@ -395,6 +395,11 @@ class ConstantArrayType extends ArrayType implements ConstantType
 		return TrinaryLogic::createNo();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $type->isConstantArray()->toBooleanType();
+	}
+
 	public function equals(Type $type): bool
 	{
 		if (!$type instanceof self) {

@@ -262,6 +262,11 @@ class NullType implements ConstantScalarType
 		return TrinaryLogic::createNo();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $type->isNull()->toBooleanType();
+	}
+
 	public function getSmallerType(): Type
 	{
 		return new NeverType();

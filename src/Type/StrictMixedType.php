@@ -252,6 +252,11 @@ class StrictMixedType implements CompoundType
 		return TrinaryLogic::createNo();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return new BooleanType();
+	}
+
 	public function isOffsetAccessible(): TrinaryLogic
 	{
 		return TrinaryLogic::createNo();

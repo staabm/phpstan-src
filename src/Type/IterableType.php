@@ -350,6 +350,11 @@ class IterableType implements CompoundType
 		return TrinaryLogic::createNo();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $type->isIterable()->toBooleanType();
+	}
+
 	public function getEnumCases(): array
 	{
 		return [];

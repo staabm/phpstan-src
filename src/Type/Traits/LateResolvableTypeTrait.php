@@ -411,6 +411,11 @@ trait LateResolvableTypeTrait
 		return $this->resolve()->isScalar();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $this->resolve()->looseCompare($type);
+	}
+
 	public function getSmallerType(): Type
 	{
 		return $this->resolve()->getSmallerType();

@@ -184,6 +184,11 @@ class VoidType implements Type
 		return TrinaryLogic::createNo();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return new BooleanType();
+	}
+
 	public function traverse(callable $cb): Type
 	{
 		return $this;

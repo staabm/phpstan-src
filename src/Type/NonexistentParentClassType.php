@@ -149,6 +149,11 @@ class NonexistentParentClassType implements Type
 		return TrinaryLogic::createNo();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return new BooleanType();
+	}
+
 	public function getEnumCases(): array
 	{
 		return [];

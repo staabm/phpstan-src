@@ -526,6 +526,11 @@ class StaticType implements TypeWithClassName, SubtractableType
 		return $this->getStaticObjectType()->isScalar();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $this->getStaticObjectType()->looseCompare($type);
+	}
+
 	/**
 	 * @return ParametersAcceptor[]
 	 */

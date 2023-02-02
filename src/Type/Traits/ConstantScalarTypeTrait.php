@@ -4,7 +4,9 @@ namespace PHPStan\Type\Traits;
 
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\AcceptsResult;
+use PHPStan\Type\BooleanType;
 use PHPStan\Type\CompoundType;
+use PHPStan\Type\Constant\ConstantBooleanType;
 use PHPStan\Type\ConstantScalarType;
 use PHPStan\Type\Type;
 
@@ -44,6 +46,16 @@ trait ConstantScalarTypeTrait
 		}
 
 		return TrinaryLogic::createNo();
+	}
+
+	public function looseCompare(Type $type): BooleanType
+	{
+		if ($this instanceof ConstantScalarType && $type instanceof ConstantScalarType) {
+			// @phpstan-ignore-next-line
+			return new ConstantBooleanType($this->getValue() == $type->getValue()); // phpcs:ignore
+		}
+
+		return new BooleanType();
 	}
 
 	public function equals(Type $type): bool

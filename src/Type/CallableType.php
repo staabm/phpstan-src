@@ -412,6 +412,11 @@ class CallableType implements CompoundType, ParametersAcceptor
 		return TrinaryLogic::createMaybe();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $type->isCallable()->toBooleanType();
+	}
+
 	public function getEnumCases(): array
 	{
 		return [];

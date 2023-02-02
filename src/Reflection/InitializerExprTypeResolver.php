@@ -1354,7 +1354,7 @@ class InitializerExprTypeResolver
 			return $this->resolveConstantArrayTypeComparison($leftType, $rightType, fn ($leftValueType, $rightValueType): BooleanType => $this->resolveEqualType($leftValueType, $rightValueType));
 		}
 
-		return new BooleanType();
+		return $leftType->looseCompare($rightType);
 	}
 
 	/**

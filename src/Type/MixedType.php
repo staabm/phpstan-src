@@ -822,6 +822,11 @@ class MixedType implements CompoundType, SubtractableType
 		return TrinaryLogic::createMaybe();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return new BooleanType();
+	}
+
 	public function tryRemove(Type $typeToRemove): ?Type
 	{
 		if ($this->isSuperTypeOf($typeToRemove)->yes()) {

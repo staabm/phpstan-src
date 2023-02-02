@@ -128,6 +128,11 @@ class IntegerType implements Type
 		return TrinaryLogic::createYes();
 	}
 
+	public function looseCompare(Type $type): BooleanType
+	{
+		return $type->isInteger()->toBooleanType();
+	}
+
 	public function tryRemove(Type $typeToRemove): ?Type
 	{
 		if ($typeToRemove instanceof IntegerRangeType || $typeToRemove instanceof ConstantIntegerType) {
