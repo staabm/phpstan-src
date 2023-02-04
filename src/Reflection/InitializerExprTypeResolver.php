@@ -1345,11 +1345,6 @@ class InitializerExprTypeResolver
 			return new ConstantBooleanType($leftType->getValue() == []); // phpcs:ignore
 		}
 
-		if ($leftType instanceof ConstantScalarType && $rightType instanceof ConstantScalarType) {
-			// @phpstan-ignore-next-line
-			return new ConstantBooleanType($leftType->getValue() == $rightType->getValue()); // phpcs:ignore
-		}
-
 		if ($leftType instanceof ConstantArrayType && $rightType instanceof ConstantArrayType) {
 			return $this->resolveConstantArrayTypeComparison($leftType, $rightType, fn ($leftValueType, $rightValueType): BooleanType => $this->resolveEqualType($leftValueType, $rightValueType));
 		}

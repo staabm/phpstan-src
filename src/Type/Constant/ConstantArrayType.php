@@ -397,7 +397,11 @@ class ConstantArrayType extends ArrayType implements ConstantType
 
 	public function looseCompare(Type $type): BooleanType
 	{
-		return $type->isConstantArray()->toBooleanType();
+		if ($type->isObject()->yes()) {
+			return new ConstantBooleanType(false);
+		}
+
+		return new BooleanType();
 	}
 
 	public function equals(Type $type): bool

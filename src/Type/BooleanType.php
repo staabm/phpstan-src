@@ -120,7 +120,11 @@ class BooleanType implements Type
 
 	public function looseCompare(Type $type): BooleanType
 	{
-		return $type->isBoolean()->toBooleanType();
+		if ($type->isObject()->yes()) {
+			return new ConstantBooleanType(false);
+		}
+
+		return new BooleanType();
 	}
 
 	public function tryRemove(Type $typeToRemove): ?Type

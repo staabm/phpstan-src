@@ -7,6 +7,7 @@ use PHPStan\ShouldNotHappenException;
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
 use PHPStan\Type\Constant\ConstantArrayType;
+use PHPStan\Type\Constant\ConstantBooleanType;
 use PHPStan\Type\Constant\ConstantIntegerType;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\Traits\MaybeCallableTypeTrait;
@@ -228,7 +229,11 @@ class StringType implements Type
 
 	public function looseCompare(Type $type): BooleanType
 	{
-		return $type->isString()->toBooleanType();
+		if ($type->isObject()->yes()) {
+			return new ConstantBooleanType(false);
+		}
+
+		return new BooleanType();
 	}
 
 	public function hasMethod(string $methodName): TrinaryLogic
