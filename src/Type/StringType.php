@@ -229,7 +229,12 @@ class StringType implements Type
 
 	public function looseCompare(Type $type): BooleanType
 	{
-		if ($type->isObject()->yes()) {
+		$looseFalse = new UnionType([
+			new ObjectWithoutClassType(),
+			new ArrayType(new MixedType(), new MixedType()),
+		]);
+
+		if ($looseFalse->isSuperTypeOf($type)->yes()) {
 			return new ConstantBooleanType(false);
 		}
 

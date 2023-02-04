@@ -7,6 +7,7 @@ use PHPStan\Type\Accessory\AccessoryNumericStringType;
 use PHPStan\Type\Constant\ConstantArrayType;
 use PHPStan\Type\Constant\ConstantBooleanType;
 use PHPStan\Type\Constant\ConstantIntegerType;
+use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\Traits\NonArrayTypeTrait;
 use PHPStan\Type\Traits\NonCallableTypeTrait;
 use PHPStan\Type\Traits\NonGeneralizableTypeTrait;
@@ -209,7 +210,20 @@ class FloatType implements Type
 
 	public function looseCompare(Type $type): BooleanType
 	{
-		if ($type->isObject()->yes()) {
+		foreach ($type->getConstantStrings() as $stringType) {
+			if ($stringType->isNumericString()->yes()) {
+				continue;
+			}
+			return new ConstantBooleanType(false);
+		}
+
+		$looseFalse = new UnionType([
+			new ObjectWithoutClassType(),
+			new ArrayType(new MixedType(), new MixedType()),
+			new ConstantStringType(''),
+		]);
+
+		if ($looseFalse->isSuperTypeOf($type)->yes()) {
 			return new ConstantBooleanType(false);
 		}
 
