@@ -263,11 +263,6 @@ class AccessoryLiteralStringType implements CompoundType, AccessoryType
 		return TrinaryLogic::createYes();
 	}
 
-	public function looseCompare(Type $type): BooleanType
-	{
-		return $type->isLiteralString()->toBooleanType();
-	}
-
 	public function traverse(callable $cb): Type
 	{
 		return $this;
