@@ -195,8 +195,6 @@ interface Type
 
 	public function isScalar(): TrinaryLogic;
 
-	public function looseCompare(Type $type): BooleanType;
-
 	public function getSmallerType(): Type;
 
 	public function getSmallerOrEqualType(): Type;
