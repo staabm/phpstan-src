@@ -5,7 +5,6 @@ namespace PHPStan\Type\Accessory;
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\AcceptsResult;
 use PHPStan\Type\BenevolentUnionType;
-use PHPStan\Type\BooleanType;
 use PHPStan\Type\CompoundType;
 use PHPStan\Type\Constant\ConstantArrayType;
 use PHPStan\Type\Constant\ConstantIntegerType;
@@ -257,11 +256,6 @@ class AccessoryNonFalsyStringType implements CompoundType, AccessoryType
 	public function isScalar(): TrinaryLogic
 	{
 		return TrinaryLogic::createYes();
-	}
-
-	public function looseCompare(Type $type): BooleanType
-	{
-		return $type->isNonFalsyString()->toBooleanType();
 	}
 
 	public function traverse(callable $cb): Type
