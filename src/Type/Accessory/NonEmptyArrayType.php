@@ -4,7 +4,6 @@ namespace PHPStan\Type\Accessory;
 
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\AcceptsResult;
-use PHPStan\Type\BooleanType;
 use PHPStan\Type\CompoundType;
 use PHPStan\Type\Constant\ConstantFloatType;
 use PHPStan\Type\Constant\ConstantIntegerType;
@@ -339,11 +338,6 @@ class NonEmptyArrayType implements CompoundType, AccessoryType
 	public function isScalar(): TrinaryLogic
 	{
 		return TrinaryLogic::createNo();
-	}
-
-	public function looseCompare(Type $type): BooleanType
-	{
-		return $type->isArray()->and($type->isIterableAtLeastOnce())->toBooleanType();
 	}
 
 	public function toNumber(): Type
