@@ -31,6 +31,7 @@ parameters:
 			- InfiniteIterator
 			- CachingIterator
 			- RegexIterator
+			- PDOStatement
 		explicitMixedInUnknownGenericNew: false
 		explicitMixedForGlobalVariables: false
 		explicitMixedViaIsArray: false
