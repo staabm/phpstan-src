@@ -767,7 +767,6 @@ return [
 	'collator_get_sort_key' => ['hasSideEffects' => false],
 	'collator_get_strength' => ['hasSideEffects' => false],
 	'compact' => ['hasSideEffects' => false],
-	'connection_aborted' => ['hasSideEffects' => false],
 	'connection_status' => ['hasSideEffects' => false],
 	'constant' => ['hasSideEffects' => false],
 	'convert_cyr_string' => ['hasSideEffects' => false],

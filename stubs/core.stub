@@ -311,3 +311,9 @@ function headers_sent(string &$filename = null, int &$line = null): bool {}
  * @return ($value is callable ? true : false)
  */
 function is_callable(mixed $value, bool $syntax_only = false, string &$callable_name = null): bool {}
+
+/**
+ * @phpstan-impure
+ * @return 0|1
+ */
+function connection_aborted(): int {}
