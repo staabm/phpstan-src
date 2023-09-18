@@ -126,7 +126,7 @@ class ResultCacheManager
 		}
 
 		$meta = $this->getMeta($allAnalysedFiles, $projectConfigArray);
-		if ($this->isMetaDifferent($data['meta'], $meta)) {
+		if ($this->isMetaDifferent($data['meta'], $meta, $output)) {
 			if ($output->isDebug()) {
 				$output->writeLineFormatted('Result cache not used because the metadata do not match.');
 			}
@@ -260,13 +260,17 @@ class ResultCacheManager
 	 * @param mixed[] $cachedMeta
 	 * @param mixed[] $currentMeta
 	 */
-	private function isMetaDifferent(array $cachedMeta, array $currentMeta): bool
+	private function isMetaDifferent(array $cachedMeta, array $currentMeta, Output $output): bool
 	{
 		$projectConfig = $currentMeta['projectConfig'];
 		if ($projectConfig !== null) {
 			ksort($currentMeta['projectConfig']);
 
 			$currentMeta['projectConfig'] = Neon::encode($currentMeta['projectConfig']);
+		}
+
+		if ($output->isDebug()) {
+			var_dump(array_diff($cachedMeta, $currentMeta));
 		}
 
 		return $cachedMeta !== $currentMeta;
