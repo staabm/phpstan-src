@@ -2,6 +2,7 @@
 
 return [
 	'new' => [
+		'array_walk_recursive' => ['bool', '&rw_input'=>'array|object', 'callback'=>'callable(mixed, array-key):void', 'userdata='=>'mixed'],
 		'error_log' => ['bool', 'message'=>'string', 'message_type='=>'0|1|2|3|4', 'destination='=>'string', 'extra_headers='=>'string'],
 		'SplFileObject::flock' => ['bool', 'operation'=>'int-mask<LOCK_SH, LOCK_EX, LOCK_UN, LOCK_NB>', '&w_wouldblock='=>'0|1'],
 		'Imagick::adaptiveBlurImage' => ['bool', 'radius'=>'float', 'sigma'=>'float', 'channel='=>'Imagick::CHANNEL_*'],
