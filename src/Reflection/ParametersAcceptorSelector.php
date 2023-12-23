@@ -152,17 +152,16 @@ class ParametersAcceptorSelector
 			if (isset($args[0]) && (bool) $args[0]->getAttribute(ArrayFilterArgVisitor::ATTRIBUTE_NAME)) {
 				if (isset($args[2])) {
 					$mode = $scope->getType($args[2]->value);
-					if ($mode instanceof ConstantIntegerType) {
-						if ($mode->getValue() === ARRAY_FILTER_USE_KEY) {
-							$arrayFilterParameters = [
-								new DummyParameter('key', $scope->getIterableKeyType($scope->getType($args[0]->value)), false, PassedByReference::createNo(), false, null),
-							];
-						} elseif ($mode->getValue() === ARRAY_FILTER_USE_BOTH) {
-							$arrayFilterParameters = [
-								new DummyParameter('item', $scope->getIterableValueType($scope->getType($args[0]->value)), false, PassedByReference::createNo(), false, null),
-								new DummyParameter('key', $scope->getIterableKeyType($scope->getType($args[0]->value)), false, PassedByReference::createNo(), false, null),
-							];
-						}
+
+					if ((new ConstantIntegerType(ARRAY_FILTER_USE_KEY))->isSuperTypeOf($mode)->yes()) {
+						$arrayFilterParameters = [
+							new DummyParameter('key', $scope->getIterableKeyType($scope->getType($args[0]->value)), false, PassedByReference::createNo(), false, null),
+						];
+					} elseif ((new ConstantIntegerType(ARRAY_FILTER_USE_BOTH))->isSuperTypeOf($mode)->yes()) {
+						$arrayFilterParameters = [
+							new DummyParameter('item', $scope->getIterableValueType($scope->getType($args[0]->value)), false, PassedByReference::createNo(), false, null),
+							new DummyParameter('key', $scope->getIterableKeyType($scope->getType($args[0]->value)), false, PassedByReference::createNo(), false, null),
+						];
 					}
 				}
 

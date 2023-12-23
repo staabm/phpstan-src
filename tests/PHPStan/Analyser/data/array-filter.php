@@ -23,8 +23,9 @@ function withMixedInsteadOfArray($var1): void
  * @param array<string, bool|float|int|string> $map1
  * @param array<string, bool|float|int|string> $map2
  * @param array<string, bool|float|int|string> $map3
+ * @param array<string, bool|float|int|string> $map4
  */
-function withoutCallback(array $map1, array $map2, array $map3): void
+function withoutCallback(array $map1, array $map2, array $map3, array $map4): void
 {
 	$filtered1 = array_filter($map1);
 	assertType('array<string, float|int<min, -1>|int<1, max>|non-falsy-string|true>', $filtered1);
@@ -34,4 +35,8 @@ function withoutCallback(array $map1, array $map2, array $map3): void
 
 	$filtered3 = array_filter($map3, null, ARRAY_FILTER_USE_BOTH);
 	assertType('array<string, float|int<min, -1>|int<1, max>|non-falsy-string|true>', $filtered3);
+
+	$filtered4 = array_filter($map4, null, rand(0,1) ? ARRAY_FILTER_USE_BOTH : ARRAY_FILTER_USE_KEY);
+	assertType('array<string, float|int<min, -1>|int<1, max>|non-falsy-string|true>', $filtered4);
+
 }
