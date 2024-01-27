@@ -15,12 +15,10 @@ function doFoo(string $s) {
 }
 
 /** @param non-int-string $s */
-function doBar(string $s) {
-	assertType('string', $s . "12");
-	assertType('non-int-string', $s . "a");
-}
-
-/** @param non-int-string $s */
 function doConcat(string $s) {
-	assertType('non-int-string', $s . $s);
+	assertType('string', $s . "0");
+	assertType('non-falsy-string', $s . "12");
+	assertType('non-falsy-string&non-int-string', $s . "a");
+	assertType('non-int-string', $s . "");
+	assertType('non-falsy-string&non-int-string', $s . $s);
 }
