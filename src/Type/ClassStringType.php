@@ -56,7 +56,7 @@ class ClassStringType extends StringType
 
 	public function isNonIntString(): TrinaryLogic
 	{
-		return TrinaryLogic::createMaybe();
+		return TrinaryLogic::createYes();
 	}
 
 	public function isNonEmptyString(): TrinaryLogic
