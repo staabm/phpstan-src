@@ -19,3 +19,8 @@ function doBar(string $s) {
 	assertType('string', $s . "12");
 	assertType('non-int-string', $s . "a");
 }
+
+/** @param non-int-string $s */
+function doConcat(string $s) {
+	assertType('non-int-string', $s . $s);
+}

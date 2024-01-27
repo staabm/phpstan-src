@@ -28,6 +28,7 @@ use PHPStan\Type\Accessory\AccessoryArrayListType;
 use PHPStan\Type\Accessory\AccessoryLiteralStringType;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
 use PHPStan\Type\Accessory\AccessoryNonFalsyStringType;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\Accessory\NonEmptyArrayType;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\BenevolentUnionType;
@@ -469,6 +470,10 @@ class InitializerExprTypeResolver
 			$accessoryTypes[] = new AccessoryNonFalsyStringType();
 		} elseif ($leftStringType->isNonEmptyString()->or($rightStringType->isNonEmptyString())->yes()) {
 			$accessoryTypes[] = new AccessoryNonEmptyStringType();
+		}
+
+		if ($leftStringType->isNonIntString()->and($rightStringType->isNonIntString())->yes()) {
+			$accessoryTypes[] = new AccessoryNonIntStringType();
 		}
 
 		if ($leftStringType->isLiteralString()->and($rightStringType->isLiteralString())->yes()) {
