@@ -3772,6 +3772,22 @@ class TypeCombinatorTest extends PHPStanTestCase
 			],
 			[
 				[
+					new ConstantStringType('123'),
+					new AccessoryNonIntStringType(),
+				],
+				NeverType::class,
+				'*NEVER*=implicit',
+			],
+			[
+				[
+					new ConstantStringType('abc'),
+					new AccessoryNonIntStringType(),
+				],
+				ConstantStringType::class,
+				'\'abc\'',
+			],
+			[
+				[
 					new StringType(),
 					new AccessoryNumericStringType(),
 				],
