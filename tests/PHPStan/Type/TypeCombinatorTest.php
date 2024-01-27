@@ -1946,8 +1946,8 @@ class TypeCombinatorTest extends PHPStanTestCase
 						new AccessoryNonIntStringType(),
 					]),
 				],
-				IntersectionType::class,
-				'non-empty-string',
+				UnionType::class,
+				'numeric-string|non-int-string',
 			],
 			[
 				[
@@ -1960,8 +1960,8 @@ class TypeCombinatorTest extends PHPStanTestCase
 						new AccessoryNonIntStringType(),
 					]),
 				],
-				IntersectionType::class,
-				'non-empty-string',
+				UnionType::class,
+				'non-empty-string|non-int-string',
 			],
 			[
 				[
@@ -1974,8 +1974,8 @@ class TypeCombinatorTest extends PHPStanTestCase
 						new AccessoryNonIntStringType(),
 					]),
 				],
-				IntersectionType::class,
-				'non-falsey-string',
+				UnionType::class,
+				'non-falsy-string|non-int-string',
 			],
 			[
 				[
@@ -2007,8 +2007,8 @@ class TypeCombinatorTest extends PHPStanTestCase
 						new AccessoryNonIntStringType(),
 					]),
 				],
-				IntersectionType::class,
-				'non-int-string',
+				UnionType::class,
+				"'1'|non-int-string",
 			],
 			[
 				[
