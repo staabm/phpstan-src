@@ -77,7 +77,7 @@ class AccessoryNonIntStringType implements CompoundType, AccessoryType
 			return $type->isAcceptedWithReasonBy($this, $strictTypes);
 		}
 
-		return new AcceptsResult($type->isNonEmptyString(), []);
+		return new AcceptsResult($type->isNonIntString(), []);
 	}
 
 	public function isSuperTypeOf(Type $type): TrinaryLogic
@@ -90,11 +90,7 @@ class AccessoryNonIntStringType implements CompoundType, AccessoryType
 			return TrinaryLogic::createYes();
 		}
 
-		if ($type->isNonFalsyString()->yes()) {
-			return TrinaryLogic::createYes();
-		}
-
-		return $type->isNonEmptyString();
+		return $type->isNonIntString();
 	}
 
 	public function isSubTypeOf(Type $otherType): TrinaryLogic
@@ -103,7 +99,7 @@ class AccessoryNonIntStringType implements CompoundType, AccessoryType
 			return $otherType->isSuperTypeOf($this);
 		}
 
-		return $otherType->isNonEmptyString()
+		return $otherType->isNonIntString()
 			->and($otherType instanceof self ? TrinaryLogic::createYes() : TrinaryLogic::createMaybe());
 	}
 
@@ -141,10 +137,6 @@ class AccessoryNonIntStringType implements CompoundType, AccessoryType
 	{
 		if ($this->hasOffsetValueType($offsetType)->no()) {
 			return new ErrorType();
-		}
-
-		if ((new ConstantIntegerType(0))->isSuperTypeOf($offsetType)->yes()) {
-			return new IntersectionType([new StringType(), new AccessoryNonIntStringType()]);
 		}
 
 		return new StringType();

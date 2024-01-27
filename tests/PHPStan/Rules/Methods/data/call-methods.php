@@ -1863,8 +1863,9 @@ class NonIntString {
 	 * @param non-falsy-string $nonFalsey
 	 * @param non-empty-string $nonEmpty
 	 * @param literal-string $literalString
+	 * @param non-int-string $nonIntString
 	 */
-	public function doFoo($literalZero, string $s, string $nonFalsey, $numericS, $nonEmpty, $literalString, int $i) {
+	public function doFoo($literalZero, string $s, string $nonFalsey, $numericS, $nonEmpty, $literalString, int $i, $nonIntString) {
 		$this->acceptsNonIntString($nonFalsey);
 
 		$this->acceptsNonIntString($numericS);
@@ -1873,6 +1874,7 @@ class NonIntString {
 		$this->acceptsNonIntString($nonEmpty);
 		$this->acceptsNonIntString($literalString);
 		$this->acceptsNonIntString($i);
+		$this->acceptsNonIntString($nonIntString);
 	}
 
 	/**
