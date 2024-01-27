@@ -6,6 +6,7 @@ use PHPStan\Type\Accessory\AccessoryArrayListType;
 use PHPStan\Type\Accessory\AccessoryLiteralStringType;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
 use PHPStan\Type\Accessory\AccessoryNonFalsyStringType;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\Accessory\AccessoryNumericStringType;
 use PHPStan\Type\Accessory\NonEmptyArrayType;
 use PHPStan\Type\Generic\GenericObjectType;
@@ -94,6 +95,7 @@ class VerbosityLevel
 				// synced with IntersectionType::describe()
 				$type instanceof AccessoryNonEmptyStringType
 				|| $type instanceof AccessoryNonFalsyStringType
+				|| $type instanceof AccessoryNonIntStringType
 				|| $type instanceof AccessoryLiteralStringType
 				|| $type instanceof AccessoryNumericStringType
 				|| $type instanceof NonEmptyArrayType

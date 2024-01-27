@@ -13,6 +13,7 @@ use PHPStan\Type\Accessory\AccessoryArrayListType;
 use PHPStan\Type\Accessory\AccessoryLiteralStringType;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
 use PHPStan\Type\Accessory\AccessoryNonFalsyStringType;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\Accessory\AccessoryNumericStringType;
 use PHPStan\Type\Accessory\AccessoryType;
 use PHPStan\Type\Accessory\HasMethodType;
@@ -86,6 +87,7 @@ class ApiInstanceofTypeRule implements Rule
 		AccessoryLiteralStringType::class => 'Type::isLiteralString()',
 		AccessoryNonEmptyStringType::class => 'Type::isNonEmptyString()',
 		AccessoryNonFalsyStringType::class => 'Type::isNonFalsyString()',
+		AccessoryNonIntStringType::class => 'Type::isNonIntStringType()',
 		HasMethodType::class => 'Type::hasMethod()',
 		HasPropertyType::class => 'Type::hasProperty()',
 		HasOffsetType::class => 'Type::hasOffsetValueType()',

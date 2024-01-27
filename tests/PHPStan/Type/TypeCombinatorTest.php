@@ -19,6 +19,7 @@ use PHPStan\Testing\PHPStanTestCase;
 use PHPStan\Type\Accessory\AccessoryLiteralStringType;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
 use PHPStan\Type\Accessory\AccessoryNonFalsyStringType;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\Accessory\AccessoryNumericStringType;
 use PHPStan\Type\Accessory\HasMethodType;
 use PHPStan\Type\Accessory\HasOffsetType;
@@ -1933,6 +1934,81 @@ class TypeCombinatorTest extends PHPStanTestCase
 				],
 				StringType::class,
 				'string',
+			],
+			[
+				[
+					new IntersectionType([
+						new StringType(),
+						new AccessoryNumericStringType(),
+					]),
+					new IntersectionType([
+						new StringType(),
+						new AccessoryNonIntStringType(),
+					]),
+				],
+				IntersectionType::class,
+				'non-empty-string',
+			],
+			[
+				[
+					new IntersectionType([
+						new StringType(),
+						new AccessoryNonEmptyStringType(),
+					]),
+					new IntersectionType([
+						new StringType(),
+						new AccessoryNonIntStringType(),
+					]),
+				],
+				IntersectionType::class,
+				'non-empty-string',
+			],
+			[
+				[
+					new IntersectionType([
+						new StringType(),
+						new AccessoryNonFalsyStringType(),
+					]),
+					new IntersectionType([
+						new StringType(),
+						new AccessoryNonIntStringType(),
+					]),
+				],
+				IntersectionType::class,
+				'non-falsey-string',
+			],
+			[
+				[
+					new ConstantStringType(''),
+					new IntersectionType([
+						new StringType(),
+						new AccessoryNonIntStringType(),
+					]),
+				],
+				IntersectionType::class,
+				'non-int-string',
+			],
+			[
+				[
+					new ConstantStringType('a'),
+					new IntersectionType([
+						new StringType(),
+						new AccessoryNonIntStringType(),
+					]),
+				],
+				IntersectionType::class,
+				'non-int-string',
+			],
+			[
+				[
+					new ConstantStringType('1'),
+					new IntersectionType([
+						new StringType(),
+						new AccessoryNonIntStringType(),
+					]),
+				],
+				IntersectionType::class,
+				'non-int-string',
 			],
 			[
 				[

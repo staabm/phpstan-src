@@ -24,6 +24,7 @@ use PHPStan\Type\Accessory\AccessoryArrayListType;
 use PHPStan\Type\Accessory\AccessoryLiteralStringType;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
 use PHPStan\Type\Accessory\AccessoryNonFalsyStringType;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\Accessory\AccessoryNumericStringType;
 use PHPStan\Type\Accessory\AccessoryType;
 use PHPStan\Type\Accessory\NonEmptyArrayType;
@@ -327,6 +328,7 @@ class IntersectionType implements CompoundType
 				|| $type instanceof AccessoryLiteralStringType
 				|| $type instanceof AccessoryNumericStringType
 				|| $type instanceof AccessoryNonFalsyStringType
+				|| $type instanceof AccessoryNonIntStringType
 			) {
 				if ($type instanceof AccessoryNonFalsyStringType) {
 					$nonFalsyStr = true;
@@ -1087,6 +1089,7 @@ class IntersectionType implements CompoundType
 				|| $type instanceof AccessoryLiteralStringType
 				|| $type instanceof AccessoryNumericStringType
 				|| $type instanceof AccessoryNonFalsyStringType
+				|| $type instanceof AccessoryNonIntStringType
 			) {
 				if ($type instanceof AccessoryNonFalsyStringType) {
 					$nonFalsyStr = true;

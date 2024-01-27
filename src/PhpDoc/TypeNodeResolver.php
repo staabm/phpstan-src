@@ -45,6 +45,7 @@ use PHPStan\Type\Accessory\AccessoryArrayListType;
 use PHPStan\Type\Accessory\AccessoryLiteralStringType;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
 use PHPStan\Type\Accessory\AccessoryNonFalsyStringType;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\Accessory\AccessoryNumericStringType;
 use PHPStan\Type\Accessory\NonEmptyArrayType;
 use PHPStan\Type\ArrayType;
@@ -290,6 +291,12 @@ class TypeNodeResolver
 				return new IntersectionType([
 					new StringType(),
 					new AccessoryNonFalsyStringType(),
+				]);
+
+			case 'non-int-string':
+				return new IntersectionType([
+					new StringType(),
+					new AccessoryNonIntStringType(),
 				]);
 
 			case 'non-empty-literal-string':
