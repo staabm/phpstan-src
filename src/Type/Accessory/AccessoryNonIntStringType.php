@@ -124,7 +124,7 @@ class AccessoryNonIntStringType implements CompoundType, AccessoryType
 
 	public function describe(VerbosityLevel $level): string
 	{
-		return 'non-empty-string';
+		return 'non-int-string';
 	}
 
 	public function isOffsetAccessible(): TrinaryLogic
@@ -346,7 +346,7 @@ class AccessoryNonIntStringType implements CompoundType, AccessoryType
 
 	public function toPhpDocNode(): TypeNode
 	{
-		return new IdentifierTypeNode('non-empty-string');
+		return new IdentifierTypeNode('non-int-string');
 	}
 
 }

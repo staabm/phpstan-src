@@ -2,7 +2,6 @@
 
 namespace ApiInstanceofType;
 
-use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeTraverser;
@@ -39,10 +38,6 @@ class Foo
 		}
 
 		if ($a instanceof GenericObjectType) {
-
-		}
-
-		if ($a instanceof AccessoryNonIntStringType) {
 
 		}
 	}

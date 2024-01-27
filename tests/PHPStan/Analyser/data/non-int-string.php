@@ -6,9 +6,12 @@ use function PHPStan\Testing\assertType;
 
 function doFoo(string $s) {
 	$a = [];
-	$a[$s] = 1;
 
-	assertType('array<int|non-int-string, int>', $a);
+	$a[$s] = 1;
+	assertType('non-empty-array<non-int-string, int>', $a);
+
+	$a[2] = 1;
+	assertType('non-empty-array<int|non-int-string, int>', $a);
 }
 
 /** @param non-int-string $s */
