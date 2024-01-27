@@ -492,7 +492,7 @@ class MixedType implements CompoundType, SubtractableType
 
 	public function toArrayKey(): Type
 	{
-		return new UnionType([new IntegerType(), new StringType()]);
+		return new UnionType([new IntegerType(), TypeCombinator::intersect(new StringType(), new AccessoryNonIntStringType())]);
 	}
 
 	public function isIterable(): TrinaryLogic
