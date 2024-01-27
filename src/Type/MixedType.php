@@ -24,6 +24,7 @@ use PHPStan\Type\Accessory\AccessoryArrayListType;
 use PHPStan\Type\Accessory\AccessoryLiteralStringType;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
 use PHPStan\Type\Accessory\AccessoryNonFalsyStringType;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\Accessory\AccessoryNumericStringType;
 use PHPStan\Type\Accessory\OversizedArrayType;
 use PHPStan\Type\Constant\ConstantArrayType;
@@ -774,6 +775,22 @@ class MixedType implements CompoundType, SubtractableType
 			);
 
 			if ($this->subtractedType->isSuperTypeOf($numericString)->yes()) {
+				return TrinaryLogic::createNo();
+			}
+		}
+
+		return TrinaryLogic::createMaybe();
+	}
+
+	public function isNonIntString(): TrinaryLogic
+	{
+		if ($this->subtractedType !== null) {
+			$nonIntString = TypeCombinator::intersect(
+				new StringType(),
+				new AccessoryNonIntStringType(),
+			);
+
+			if ($this->subtractedType->isSuperTypeOf($nonIntString)->yes()) {
 				return TrinaryLogic::createNo();
 			}
 		}

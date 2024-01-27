@@ -41,10 +41,12 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\VerbosityLevel;
 use function addcslashes;
+use function ctype_digit;
 use function in_array;
 use function is_float;
 use function is_int;
 use function is_numeric;
+use function is_string;
 use function key;
 use function strlen;
 use function substr;
@@ -318,6 +320,24 @@ class ConstantStringType extends StringType implements ConstantScalarType
 	public function isNumericString(): TrinaryLogic
 	{
 		return TrinaryLogic::createFromBoolean(is_numeric($this->getValue()));
+	}
+
+	public function isNonIntString(): TrinaryLogic
+	{
+		$value = $this->getValue();
+		if (!is_string($value)) {
+			return TrinaryLogic::createNo();
+		}
+
+		if ($value === '') {
+			return TrinaryLogic::createYes();
+		}
+
+		if ($value[0] === '-') {
+			$value = substr($value, 1);
+		}
+
+		return TrinaryLogic::createFromBoolean(!ctype_digit($value));
 	}
 
 	public function isNonEmptyString(): TrinaryLogic

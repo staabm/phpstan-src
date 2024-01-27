@@ -243,6 +243,8 @@ interface Type
 
 	public function isNumericString(): TrinaryLogic;
 
+	public function isNonIntString(): TrinaryLogic;
+
 	public function isNonEmptyString(): TrinaryLogic;
 
 	public function isNonFalsyString(): TrinaryLogic;

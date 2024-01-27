@@ -412,6 +412,11 @@ trait LateResolvableTypeTrait
 		return $this->resolve()->isNumericString();
 	}
 
+	public function isNonIntString(): TrinaryLogic
+	{
+		return $this->resolve()->isNonIntString();
+	}
+
 	public function isNonEmptyString(): TrinaryLogic
 	{
 		return $this->resolve()->isNonEmptyString();
