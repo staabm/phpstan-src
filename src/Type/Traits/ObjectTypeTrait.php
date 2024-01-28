@@ -18,7 +18,6 @@ use PHPStan\TrinaryLogic;
 use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\BooleanType;
-use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ErrorType;
 use PHPStan\Type\MixedType;
 use PHPStan\Type\StringType;
