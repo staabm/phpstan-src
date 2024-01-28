@@ -20,7 +20,7 @@ function foo3($list)
 {
 	$flip = array_flip($list);
 
-	assertType('array<int|string, (int|string)>', $flip);
+	assertType('array<int|non-int-string, (int|string)>', $flip);
 }
 
 /**
