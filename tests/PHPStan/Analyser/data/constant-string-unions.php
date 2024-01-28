@@ -80,7 +80,7 @@ class HelloWorld
 		$left .= $right;
 		assertType("'axxx'|'axxy'|'axyx'|'axyy'|'ayxx'|'ayxy'|'ayyx'|'ayyy'|'bxxx'|'bxxy'|'bxyx'|'bxyy'|'byxx'|'byxy'|'byyx'|'byyy'", $left);
 		$left .= $right;
-		assertType("literal-string&non-falsy-string", $left);
+		assertType("literal-string&non-falsy-string&non-int-string", $left);
 
 		$left = rand() ? 'a' : 'b';
 		$right = rand() ? 'x' : 'y';
@@ -89,7 +89,7 @@ class HelloWorld
 		$left = "{$left}{$right}";
 		assertType("'axxx'|'axxy'|'axyx'|'axyy'|'ayxx'|'ayxy'|'ayyx'|'ayyy'|'bxxx'|'bxxy'|'bxyx'|'bxyy'|'byxx'|'byxy'|'byyx'|'byyy'", $left);
 		$left = "{$left}{$right}";
-		assertType("literal-string&non-falsy-string", $left);
+		assertType("literal-string&non-falsy-string&non-int-string", $left);
 	}
 
 	/**

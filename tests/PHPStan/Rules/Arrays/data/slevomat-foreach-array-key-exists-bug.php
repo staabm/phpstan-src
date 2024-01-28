@@ -21,7 +21,7 @@ class Foo
 						assertType('non-empty-array<int|non-int-string, array{itemsCount: (array|float|int), interval: mixed}>', $intervalResults);
 						assertType('array{itemsCount: (array|float|int), interval: mixed}', $intervalResults[$key]);
 					} else {
-						assertType('array<int|string, array{itemsCount: mixed, interval: mixed}>', $intervalResults);
+						assertType('array<int|non-int-string, array{itemsCount: mixed, interval: mixed}>', $intervalResults);
 						assertType('array{itemsCount: mixed, interval: mixed}', $intervalResults[$key]);
 						$intervalResults[$key] = [
 							'itemsCount' => $itemsCount,
