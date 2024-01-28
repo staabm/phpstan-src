@@ -27,14 +27,14 @@ class Foo
 							'itemsCount' => $itemsCount,
 							'interval' => $percentageInterval,
 						];
-						assertType('non-empty-array<int|string, array{itemsCount: mixed, interval: mixed}>', $intervalResults);
+						assertType('non-empty-array<int|non-int-string, array{itemsCount: mixed, interval: mixed}>', $intervalResults);
 						assertType('array{itemsCount: mixed, interval: mixed}', $intervalResults[$key]);
 					}
 				}
 			}
 		}
 
-		assertType('array<int|string, array{itemsCount: mixed, interval: mixed}>', $intervalResults);
+		assertType('array<int|non-int-string, array{itemsCount: mixed, interval: mixed}>', $intervalResults);
 		foreach ($intervalResults as $data) {
 			echo $data['interval'];
 		}
