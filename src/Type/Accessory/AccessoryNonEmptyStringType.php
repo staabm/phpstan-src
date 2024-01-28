@@ -195,7 +195,7 @@ class AccessoryNonEmptyStringType implements CompoundType, AccessoryType
 
 	public function toArrayKey(): Type
 	{
-		return $this;
+		return TypeCombinator::intersect($this, new AccessoryNonIntStringType());
 	}
 
 	public function isNull(): TrinaryLogic

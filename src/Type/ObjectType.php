@@ -35,6 +35,7 @@ use PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection;
 use PHPStan\Reflection\Type\UnresolvedPropertyPrototypeReflection;
 use PHPStan\ShouldNotHappenException;
 use PHPStan\TrinaryLogic;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\Constant\ConstantArrayType;
 use PHPStan\Type\Constant\ConstantBooleanType;
 use PHPStan\Type\Constant\ConstantStringType;
@@ -653,7 +654,7 @@ class ObjectType implements TypeWithClassName, SubtractableType
 
 	public function toArrayKey(): Type
 	{
-		return $this->toString();
+		return TypeCombinator::intersect($this->toString(), new AccessoryNonIntStringType());
 	}
 
 	public function toBoolean(): BooleanType

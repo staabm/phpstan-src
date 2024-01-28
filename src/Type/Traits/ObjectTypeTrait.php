@@ -15,12 +15,15 @@ use PHPStan\Reflection\Type\CallbackUnresolvedPropertyPrototypeReflection;
 use PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection;
 use PHPStan\Reflection\Type\UnresolvedPropertyPrototypeReflection;
 use PHPStan\TrinaryLogic;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\BooleanType;
+use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\ErrorType;
 use PHPStan\Type\MixedType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
+use PHPStan\Type\TypeCombinator;
 
 trait ObjectTypeTrait
 {
@@ -260,7 +263,7 @@ trait ObjectTypeTrait
 
 	public function toArrayKey(): Type
 	{
-		return new StringType();
+		return TypeCombinator::intersect(new StringType(), new AccessoryNonIntStringType());
 	}
 
 }

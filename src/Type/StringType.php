@@ -9,6 +9,7 @@ use PHPStan\Reflection\ReflectionProviderStaticAccessor;
 use PHPStan\ShouldNotHappenException;
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\Constant\ConstantArrayType;
 use PHPStan\Type\Constant\ConstantIntegerType;
 use PHPStan\Type\Constant\ConstantStringType;
@@ -161,7 +162,7 @@ class StringType implements Type
 
 	public function toArrayKey(): Type
 	{
-		return $this;
+		return TypeCombinator::intersect($this, new AccessoryNonIntStringType());
 	}
 
 	public function isNull(): TrinaryLogic

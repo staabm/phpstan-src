@@ -29,6 +29,7 @@ use PHPStan\Type\Traits\NonRemoveableTypeTrait;
 use PHPStan\Type\Traits\TruthyBooleanTypeTrait;
 use PHPStan\Type\Traits\UndecidedComparisonCompoundTypeTrait;
 use PHPStan\Type\Type;
+use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\UnionType;
 use PHPStan\Type\VerbosityLevel;
 
@@ -195,7 +196,7 @@ class AccessoryNonFalsyStringType implements CompoundType, AccessoryType
 
 	public function toArrayKey(): Type
 	{
-		return $this;
+		return TypeCombinator::intersect($this, new AccessoryNonIntStringType());
 	}
 
 	public function isNull(): TrinaryLogic

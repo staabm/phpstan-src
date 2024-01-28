@@ -8,10 +8,10 @@ function doFoo(string $s) {
 	$a = [];
 
 	$a[$s] = 1;
-	assertType('non-empty-array<non-int-string, int>', $a);
+	assertType('non-empty-array<non-int-string, 1>', $a);
 
 	$a[2] = 1;
-	assertType('non-empty-array<int|non-int-string, int>', $a);
+	assertType('non-empty-array<2|non-int-string, 1>&hasOffsetValue(2, 1)', $a);
 }
 
 /** @param non-int-string $s */

@@ -22,6 +22,7 @@ use PHPStan\TrinaryLogic;
 use PHPStan\Type\Accessory\AccessoryLiteralStringType;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
 use PHPStan\Type\Accessory\AccessoryNonFalsyStringType;
+use PHPStan\Type\Accessory\AccessoryNonIntStringType;
 use PHPStan\Type\ClassStringType;
 use PHPStan\Type\CompoundType;
 use PHPStan\Type\ConstantScalarType;
@@ -309,7 +310,7 @@ class ConstantStringType extends StringType implements ConstantScalarType
 
 		/** @var int|string $offsetValue */
 		$offsetValue = key([$this->value => null]);
-		return $this->arrayKeyType = is_int($offsetValue) ? new ConstantIntegerType($offsetValue) : new ConstantStringType($offsetValue);
+		return $this->arrayKeyType = is_int($offsetValue) ? new ConstantIntegerType($offsetValue) : TypeCombinator::intersect(new ConstantStringType($offsetValue), new AccessoryNonIntStringType());
 	}
 
 	public function isString(): TrinaryLogic
