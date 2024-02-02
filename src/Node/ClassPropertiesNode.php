@@ -330,7 +330,7 @@ class ClassPropertiesNode extends NodeAbstract implements VirtualNode
 			if (!$methodCallNode->name instanceof Identifier) {
 				continue;
 			}
-			
+
 			$callScope = $methodCall->getScope();
 			$inMethod = $callScope->getFunction();
 			if (!$inMethod instanceof MethodReflection) {
