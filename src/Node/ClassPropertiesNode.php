@@ -330,7 +330,16 @@ class ClassPropertiesNode extends NodeAbstract implements VirtualNode
 			if (!$methodCallNode->name instanceof Identifier) {
 				continue;
 			}
+			
 			$callScope = $methodCall->getScope();
+			$inMethod = $callScope->getFunction();
+			if (!$inMethod instanceof MethodReflection) {
+				continue;
+			}
+			if (!in_array($inMethod->getName(), $methods, true)) {
+				continue;
+			}
+
 			if ($methodCallNode instanceof Node\Expr\MethodCall) {
 				$calledOnType = $callScope->getType($methodCallNode->var);
 			} else {
@@ -342,14 +351,6 @@ class ClassPropertiesNode extends NodeAbstract implements VirtualNode
 			}
 
 			if (TypeUtils::findThisType($calledOnType) === null) {
-				continue;
-			}
-
-			$inMethod = $callScope->getFunction();
-			if (!$inMethod instanceof MethodReflection) {
-				continue;
-			}
-			if (!in_array($inMethod->getName(), $methods, true)) {
 				continue;
 			}
 
