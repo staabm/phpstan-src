@@ -363,6 +363,7 @@ class BetterReflectionProvider implements ReflectionProvider
 		$fileName = $constantReflection->getFileName();
 		$constantValueType = $this->initializerExprTypeResolver->getType($constantReflection->getValueExpression(), InitializerExprContext::fromGlobalConstant($constantReflection));
 		$docComment = $constantReflection->getDocComment();
+		$isNative = !$constantReflection->isUserDefined();
 
 		$isDeprecated = TrinaryLogic::createNo();
 		$deprecatedDescription = null;
@@ -387,6 +388,7 @@ class BetterReflectionProvider implements ReflectionProvider
 			$fileName,
 			$isDeprecated,
 			$deprecatedDescription,
+			TrinaryLogic::createFromBoolean($isNative),
 		);
 	}
 

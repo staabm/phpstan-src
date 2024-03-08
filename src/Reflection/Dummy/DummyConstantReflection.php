@@ -86,6 +86,11 @@ class DummyConstantReflection implements ConstantReflection
 		return TrinaryLogic::createMaybe();
 	}
 
+	public function isNative(): TrinaryLogic
+	{
+		return TrinaryLogic::createMaybe();
+	}
+
 	public function getDocComment(): ?string
 	{
 		return null;

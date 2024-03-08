@@ -15,6 +15,7 @@ class RuntimeConstantReflection implements GlobalConstantReflection
 		private ?string $fileName,
 		private TrinaryLogic $isDeprecated,
 		private ?string $deprecatedDescription,
+		private TrinaryLogic $isNative,
 	)
 	{
 	}
@@ -47,6 +48,11 @@ class RuntimeConstantReflection implements GlobalConstantReflection
 	public function isInternal(): TrinaryLogic
 	{
 		return TrinaryLogic::createNo();
+	}
+
+	public function isNative(): TrinaryLogic
+	{
+		return $this->isNative;
 	}
 
 }
