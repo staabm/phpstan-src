@@ -28,7 +28,7 @@ var_dump($parser->parse('/(?J)(?<Foo>[a-z]+)|(?<Foo>[0-9]+)/'));
 class RegexCapturingGroupsParser {
 	public function parse(string $regex) {
 // 1. Read the grammar.
-		$grammar  = new Hoa\File\Read('hoa://Library/Regex/Grammar.pp');
+		$grammar  = new Hoa\File\Read(__DIR__.'/conf/RegexGrammar.pp');
 
 // 2. Load the compiler.
 		$compiler = Hoa\Compiler\Llk\Llk::load($grammar);
