@@ -29,6 +29,8 @@ function test(int $count, int $expected) {
 (function () {
 	$parser = new RegexCapturingGroupsParser();
 
+	test($parser->countNonOptionalGroups('/\w-(?P<num>\d+)-(\w)/'), 0);
+	test($parser->countNonOptionalGroups('[\w-]'), 0);
 	test($parser->countNonOptionalGroups('/^(?<name>\S+::\S+)?/'), 0);
 	test($parser->countNonOptionalGroups('/^(?<name>\S+::\S+)/'), 1);
 	test($parser->countNonOptionalGroups('/^(?<name>\S+::\S+)(?:(?<dataname> with data set (?:#\d+|"[^"]+"))\s\()?/'), 1); // not hoa parsable

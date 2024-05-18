@@ -37,9 +37,6 @@
 // parser. More informations at http://pcre.org/pcre.txt, sections pcrepattern &
 // pcresyntax.
 //
-// @copyright  Copyright © 2007-2017 Hoa community.
-// @license    New BSD License
-//
 
 
 // Skip.
@@ -109,7 +106,7 @@
 // Please, see PCRESYNTAX(3), General Category properties, PCRE special category
 // properties and script names for \p{} and \P{}.
 %token character_type            \\([CdDhHNRsSvVwWX]|[pP]{[^}]+})
-%token anchor                    \\(bBAZzG)|\^|\$
+%token anchor                    \\([bBAZzG])|\^|\$
 %token match_point_reset         \\K
 %token literal                   \\.|.
 
@@ -168,7 +165,7 @@ quantifier:
         ::negative_class_:: #negativeclass
       | ::class_::
     )
-    ( range() | literal() )+
+    ( <class_> | range() | literal() )+ <range>?
     ::_class::
 
 #range:
