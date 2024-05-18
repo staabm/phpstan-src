@@ -29,6 +29,7 @@ function test(int $count, int $expected) {
 (function () {
 	$parser = new RegexCapturingGroupsParser();
 	test($parser->countNonOptionalGroups('/Price: (?:£|€)(\d+)/'), 1);
+	test($parser->countNonOptionalGroups('/Price: (£|€)(\d+)/i'), 2);
 	test($parser->countNonOptionalGroups('/(a|b)|(?:c)/'), 0);
 	test($parser->countNonOptionalGroups('/(foo)(bar)(baz)+/'), 3);
 	test($parser->countNonOptionalGroups('/(foo)(bar)(baz)*/'), 2);
