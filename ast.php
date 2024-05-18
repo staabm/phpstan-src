@@ -58,18 +58,16 @@ class RegexCapturingGroupsParser {
 		echo $dump->visit($ast);
 
 		$groups = [];
-		$this->walk($ast, $groups, 0, 0);
-
-		return count($groups);
+		return $this->walk($ast, 0, 0);
 	}
 
-	private function walk(\Hoa\Compiler\Llk\TreeNode $ast, array &$groups, int $inAlternation, int $inOptionalQuantification)
+	private function walk(\Hoa\Compiler\Llk\TreeNode $ast, int $inAlternation, int $inOptionalQuantification): int
 	{
 		if (
 			$ast->getId() === '#capturing'
 			&& !($inAlternation > 0 || $inOptionalQuantification > 0)
 		) {
-			$groups[] = [$ast->getId()];
+			return 1;
 		}
 
 		if ($ast->getId() === '#alternation') {
@@ -89,9 +87,12 @@ class RegexCapturingGroupsParser {
 			}
 		}
 
+		$count = 0;
 		foreach ($ast->getChildren() as $child) {
-			$this->walk($child, $groups, $inAlternation, $inOptionalQuantification);
+			$count += $this->walk($child, $inAlternation, $inOptionalQuantification);
 		}
+
+		return $count;
 
 	}
 
