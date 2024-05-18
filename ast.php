@@ -2,12 +2,12 @@
 
 /*
 $s = '123';
-preg_match('/(?P<num>\d+)/', $s, $matches, PREG_UNMATCHED_AS_NULL);
+preg_match('/(?P<num>\d+)/', $s, $matches);
 var_dump($matches);
 return;
 
 $s = 'c';
-preg_match('/(a|b)|(?:c)/', $s, $matches, PREG_UNMATCHED_AS_NULL);
+preg_match('/(a|b)|(?:c)/', $s, $matches);
 var_dump($matches); // NULL in matches!
 
 return;
@@ -17,16 +17,29 @@ require_once  __DIR__.'/vendor/autoload.php';
 
 //$ast      = $compiler->parse('/(?P<num>\d+)/');
 
-$parser = new RegexCapturingGroupsParser();
-var_dump($parser->parse('/Price: (?:£|€)(\d+)/'));
-var_dump($parser->parse('/(a|b)|(?:c)/'));
-var_dump($parser->parse('/(foo)(bar)(baz)*/'));
-var_dump($parser->parse('/(foo)(bar)(baz)?/'));
-var_dump($parser->parse('/(foo)(bar)(baz){0,3}/'));
-var_dump($parser->parse('/(?J)(?<Foo>[a-z]+)|(?<Foo>[0-9]+)/'));
+
+function test(int $count, int $expected) {
+	if ($count !== $expected) {
+		throw new \Exception("Expected $expected, got $count");
+	}
+
+	echo "OK\n";
+}
+
+(function () {
+	$parser = new RegexCapturingGroupsParser();
+	test($parser->countNonOptionalGroups('/Price: (?:£|€)(\d+)/'), 1);
+	test($parser->countNonOptionalGroups('/(a|b)|(?:c)/'), 0);
+	test($parser->countNonOptionalGroups('/(foo)(bar)(baz)+/'), 3);
+	test($parser->countNonOptionalGroups('/(foo)(bar)(baz)*/'), 2);
+	test($parser->countNonOptionalGroups('/(foo)(bar)(baz)?/'), 2);
+	test($parser->countNonOptionalGroups('/(foo)(bar)(baz){0,3}/'), 2);
+	test($parser->countNonOptionalGroups('/(foo)(bar)(baz){2,3}/'), 3);
+	// test($parser->countNonOptionalGroups('/(?J)(?<Foo>[a-z]+)|(?<Foo>[0-9]+)/'));
+})();
 
 class RegexCapturingGroupsParser {
-	public function parse(string $regex) {
+	public function countNonOptionalGroups(string $regex):int {
 // 1. Read the grammar.
 		$grammar  = new Hoa\File\Read(__DIR__.'/conf/RegexGrammar.pp');
 
@@ -47,13 +60,16 @@ class RegexCapturingGroupsParser {
 		$groups = [];
 		$this->walk($ast, $groups, 0, 0);
 
-		return $groups;
+		return count($groups);
 	}
 
 	private function walk(\Hoa\Compiler\Llk\TreeNode $ast, array &$groups, int $inAlternation, int $inOptionalQuantification)
 	{
-		if ($ast->getId() === '#capturing') {
-			$groups[] = [$ast->getId(), 'optional' => $inAlternation > 0 || $inOptionalQuantification > 0];
+		if (
+			$ast->getId() === '#capturing'
+			&& !($inAlternation > 0 || $inOptionalQuantification > 0)
+		) {
+			$groups[] = [$ast->getId()];
 		}
 
 		if ($ast->getId() === '#alternation') {
