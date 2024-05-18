@@ -28,6 +28,8 @@ function test(int $count, int $expected) {
 
 (function () {
 	$parser = new RegexCapturingGroupsParser();
+
+	test($parser->countNonOptionalGroups('/(?n)(\d+)/'), 1); // not hoa parsable
 	test($parser->countNonOptionalGroups('  /Price: (£|€)\d+/ i u'), 1);
 	test($parser->countNonOptionalGroups('/Price: (?:£|€)(\d+)/'), 1);
 	test($parser->countNonOptionalGroups('/Price: (£|€)(\d+)/i'), 2);
