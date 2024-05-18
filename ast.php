@@ -29,6 +29,9 @@ function test(int $count, int $expected) {
 (function () {
 	$parser = new RegexCapturingGroupsParser();
 
+	test($parser->countNonOptionalGroups('/^(?<name>\S+::\S+)?/'), 0);
+	test($parser->countNonOptionalGroups('/^(?<name>\S+::\S+)/'), 1);
+	test($parser->countNonOptionalGroups('/^(?<name>\S+::\S+)(?:(?<dataname> with data set (?:#\d+|"[^"]+"))\s\()?/'), 1); // not hoa parsable
 	test($parser->countNonOptionalGroups('/(?n)(\d+)/'), 1); // not hoa parsable
 	test($parser->countNonOptionalGroups('  /Price: (£|€)\d+/ i u'), 1);
 	test($parser->countNonOptionalGroups('/Price: (?:£|€)(\d+)/'), 1);
@@ -61,14 +64,13 @@ class RegexCapturingGroupsParser {
 		$dump     = new Hoa\Compiler\Visitor\Dump();
 		echo $dump->visit($ast);
 
-		$groups = [];
 		return $this->walk($ast, 0, 0);
 	}
 
 	private function walk(\Hoa\Compiler\Llk\TreeNode $ast, int $inAlternation, int $inOptionalQuantification): int
 	{
 		if (
-			$ast->getId() === '#capturing'
+			in_array($ast->getId(), ['#capturing', '#namedcapturing'], true)
 			&& !($inAlternation > 0 || $inOptionalQuantification > 0)
 		) {
 			return 1;
