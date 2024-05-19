@@ -109,7 +109,7 @@
 // Please, see PCRESYNTAX(3), General Category properties, PCRE special category
 // properties and script names for \p{} and \P{}.
 %token character_type            \\([CdDhHNRsSvVwWX]|[pP]{[^}]+})
-%token anchor                    \\([bBAZzG])|\^|\$
+%token anchor                    \\(bBAZzG)|\^|\$
 %token match_point_reset         \\K
 %token literal                   \\.|.
 
@@ -168,7 +168,7 @@ quantifier:
         ::negative_class_:: #negativeclass
       | ::class_::
     )
-    ( <class_> | range() | literal() )+
+    ( range() | literal() )+
     ::_class::
 
 #range:
@@ -178,7 +178,7 @@ simple:
     capturing()
   | literal()
 
-#capturing:
+capturing:
     ::comment_:: <comment>? ::_comment:: #comment
   | (
         ::named_capturing_:: <capturing_name> ::_named_capturing:: #namedcapturing
@@ -191,7 +191,6 @@ simple:
 
 literal:
     <character>
-  | <range>
   | <dynamic_character>
   | <character_type>
   | <anchor>
