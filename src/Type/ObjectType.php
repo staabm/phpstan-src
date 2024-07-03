@@ -1399,7 +1399,8 @@ class ObjectType implements TypeWithClassName, SubtractableType
 			if ($allowedSubTypes !== null) {
 				$preciseVerbosity = VerbosityLevel::precise();
 
-				$isEnum = $classReflection->isEnum();
+				$allowedEnumCases = [];
+				$isEnum = $classReflection !== null && $classReflection->isEnum();
 				if ($isEnum) {
 					$allowedEnumCases = $this->getAllowedEnumCaseTypes($allowedSubTypes);
 				}
