@@ -1370,6 +1370,10 @@ class ObjectType implements TypeWithClassName, SubtractableType
 		return $this->changeSubtractedType(null);
 	}
 
+	/**
+	 * @param array<Type> $allowedSubTypes
+	 * @return array<string, EnumCaseObjectType>
+	 */
 	private function getAllowedEnumCaseTypes(array $allowedSubTypes): array
 	{
 		if ($this->allowedEnumCaseSubtypes !== null) {
