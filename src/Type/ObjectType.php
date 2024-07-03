@@ -97,6 +97,9 @@ class ObjectType implements TypeWithClassName, SubtractableType
 	/** @var array<string, list<EnumCaseObjectType>> */
 	private static array $enumCases = [];
 
+	/** @var array<string, EnumCaseObjectType>|null */
+	private ?array $allowedEnumCaseSubtypes = null;
+
 	/** @api */
 	public function __construct(
 		private string $className,
@@ -1367,6 +1370,23 @@ class ObjectType implements TypeWithClassName, SubtractableType
 		return $this->changeSubtractedType(null);
 	}
 
+	private function getAllowedEnumCaseTypes(array $allowedSubTypes): array
+	{
+		if ($this->allowedEnumCaseSubtypes !== null) {
+			return $this->allowedEnumCaseSubtypes;
+		}
+		$allowedEnumCases = [];
+		$preciseVerbosity = VerbosityLevel::precise();
+		foreach ($allowedSubTypes as $enumCaseObj) {
+			if (!$enumCaseObj instanceof EnumCaseObjectType) {
+				throw new ShouldNotHappenException();
+			}
+			$allowedEnumCases[$enumCaseObj->describe($preciseVerbosity)] = $enumCaseObj;
+		}
+
+		return $this->allowedEnumCaseSubtypes = $allowedEnumCases;
+	}
+
 	public function changeSubtractedType(?Type $subtractedType): Type
 	{
 		if ($subtractedType !== null) {
@@ -1375,25 +1395,43 @@ class ObjectType implements TypeWithClassName, SubtractableType
 			if ($allowedSubTypes !== null) {
 				$preciseVerbosity = VerbosityLevel::precise();
 
+				$isEnum = $classReflection->isEnum();
+				if ($isEnum) {
+					$allowedEnumCases = $this->getAllowedEnumCaseTypes($allowedSubTypes);
+				}
 				$originalAllowedSubTypes = $allowedSubTypes;
-				$subtractedSubTypes = [];
 
-				$subtractedTypes = TypeUtils::flattenTypes($subtractedType);
-				foreach ($subtractedTypes as $subType) {
-					foreach ($allowedSubTypes as $key => $allowedSubType) {
-						if ($subType->equals($allowedSubType)) {
-							$description = $allowedSubType->describe($preciseVerbosity);
-							$subtractedSubTypes[$description] = $subType;
-							unset($allowedSubTypes[$key]);
-							continue 2;
+				$subtractedSubTypes = [];
+				foreach (TypeUtils::flattenTypes($subtractedType) as $subType) {
+					if ($isEnum && $subType instanceof EnumCaseObjectType) {
+						$subDescription = $subType->describe($preciseVerbosity);
+						if (array_key_exists($subDescription, $allowedEnumCases)) {
+							$subtractedSubTypes[$subDescription] = $subType;
+							unset($allowedEnumCases[$subDescription]);
+							continue;
+						}
+					} else {
+						foreach ($allowedSubTypes as $key => $allowedSubType) {
+							if ($subType->equals($allowedSubType)) {
+								$description = $allowedSubType->describe($preciseVerbosity);
+								$subtractedSubTypes[$description] = $subType;
+								unset($allowedSubTypes[$key]);
+								continue 2;
+							}
 						}
 					}
 
 					return new self($this->className, $subtractedType);
 				}
 
-				if (count($allowedSubTypes) === 1) {
-					return array_values($allowedSubTypes)[0];
+				if ($isEnum) {
+					if (count($allowedEnumCases) === 1) {
+						return array_values($allowedEnumCases)[0];
+					}
+				} else {
+					if (count($allowedSubTypes) === 1) {
+						return array_values($allowedSubTypes)[0];
+					}
 				}
 
 				$subtractedSubTypes = array_values($subtractedSubTypes);
