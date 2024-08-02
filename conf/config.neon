@@ -297,6 +297,8 @@ conditionalTags:
 		phpstan.functionParameterOutTypeExtension: %featureToggles.narrowPregMatches%
 	PHPStan\Type\Php\PregReplaceCallbackClosureTypeExtension:
 		phpstan.functionParameterClosureTypeExtension: %featureToggles.narrowPregMatches%
+	PHPStan\Type\Php\PregReplaceCallbackArrayClosureTypeExtension:
+		phpstan.functionParameterClosureTypeExtension: %featureToggles.narrowPregMatches%
 
 services:
 	-
@@ -1501,6 +1503,9 @@ services:
 
 	-
 		class: PHPStan\Type\Php\PregReplaceCallbackClosureTypeExtension
+
+	-
+		class: PHPStan\Type\Php\PregReplaceCallbackArrayClosureTypeExtension
 
 	-
 		class: PHPStan\Type\Php\RegexArrayShapeMatcher

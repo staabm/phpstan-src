@@ -57,7 +57,7 @@ final class RegexArrayShapeMatcher
 	}
 
 	/**
-	 * @deprecated use matchExpr() instead for a more precise result
+	 * Use matchExpr() if possible for a more precise result
 	 */
 	public function matchType(Type $patternType, ?Type $flagsType, TrinaryLogic $wasMatched): ?Type
 	{
