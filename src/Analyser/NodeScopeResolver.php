@@ -4969,7 +4969,12 @@ final class NodeScopeResolver
 			}
 
 			$nodeCallback(new VariableAssignNode($var, $assignedExpr, $isAssignOp), $result->getScope());
-			$scope = $scope->assignVariable($var->name, $type, $scope->getNativeType($assignedExpr));
+			if ($assignedExpr instanceof Variable) {
+				$scope = $scope->assignVariableFromVariable($var->name, $assignedExpr->name, $type, $scope->getNativeType($assignedExpr));
+			} else {
+				$scope = $scope->assignVariable($var->name, $type, $scope->getNativeType($assignedExpr));
+			}
+
 			foreach ($conditionalExpressions as $exprString => $holders) {
 				$scope = $scope->addConditionalExpressions($exprString, $holders);
 			}
@@ -5445,6 +5450,8 @@ final class NodeScopeResolver
 	 */
 	private function processConditionalExpressionsAfterVariableAssign(Scope $scope, string $targetVariable, string $sourceVariable, array $conditionalExpressions): array
 	{
+		return $conditionalExpressions;
+
 		$node = new Variable($targetVariable);
 
 		foreach ($conditionalExpressions as $exprString => $expressionHolders) {

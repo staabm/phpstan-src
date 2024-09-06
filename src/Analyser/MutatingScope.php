@@ -3909,6 +3909,71 @@ final class MutatingScope implements Scope
 		return array_key_exists($exprString, $this->currentlyAllowedUndefinedExpressions);
 	}
 
+	public function assignVariableFromVariable(string $targetVariable, string $sourceVariable, Type $type, Type $nativeType, ?TrinaryLogic $certainty = null): self
+	{
+		$node = new Variable($targetVariable);
+
+		$expressionTypes = [];
+		foreach ($this->expressionTypes as $name => $variableTypeHolder) {
+			$expr = $variableTypeHolder->getExpr();
+			if ($expr instanceof PropertyFetch) {
+				$expr = $expr->var;
+			}
+			if (!$expr instanceof Variable) {
+				continue;
+			}
+			if (!is_string($expr->name)) {
+				continue;
+			}
+			if ($expr->name !== $sourceVariable) {
+				continue;
+			}
+
+			$exprString = str_replace('$' .$sourceVariable, '$' .$targetVariable, $name);
+			$expressionTypes[$exprString] = new ExpressionTypeHolder($node, $variableTypeHolder->getType(), $variableTypeHolder->getCertainty());
+		}
+		$nativeExpressionTypes = [];
+		foreach ($this->nativeExpressionTypes as $name => $variableTypeHolder) {
+			$expr = $variableTypeHolder->getExpr();
+			if ($expr instanceof PropertyFetch) {
+				$expr = $expr->var;
+			}
+			if (!$expr instanceof Variable) {
+				continue;
+			}
+			if (!is_string($expr->name)) {
+				continue;
+			}
+			if ($expr->name !== $sourceVariable) {
+				continue;
+			}
+
+			$exprString = str_replace('$' .$sourceVariable, '$' .$targetVariable, $name);
+			$nativeExpressionTypes[$exprString] = new ExpressionTypeHolder($node, $variableTypeHolder->getType(), $variableTypeHolder->getCertainty());
+		}
+
+		$scope = $this->assignVariable($targetVariable, $type, $nativeType, $certainty);
+
+		return $scope->scopeFactory->create(
+			$scope->context,
+			$scope->isDeclareStrictTypes(),
+			$scope->getFunction(),
+			$scope->getNamespace(),
+			array_merge($scope->expressionTypes, $expressionTypes),
+			array_merge($scope->nativeExpressionTypes, $nativeExpressionTypes),
+			$scope->conditionalExpressions,
+			$scope->inClosureBindScopeClasses,
+			$scope->anonymousFunctionReflection,
+			$scope->inFirstLevelStatement,
+			$scope->currentlyAssignedExpressions,
+			$scope->currentlyAllowedUndefinedExpressions,
+			$scope->inFunctionCallsStack,
+			$scope->afterExtractCall,
+			$scope->parentScope,
+			$scope->nativeTypesPromoted,
+		);
+	}
+
 	public function assignVariable(string $variableName, Type $type, Type $nativeType, ?TrinaryLogic $certainty = null): self
 	{
 		$node = new Variable($variableName);
