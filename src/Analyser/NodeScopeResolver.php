@@ -5445,33 +5445,39 @@ final class NodeScopeResolver
 	 */
 	private function processConditionalExpressionsAfterVariableAssign(Scope $scope, string $targetVariable, string $sourceVariable, array $conditionalExpressions): array
 	{
-		foreach ($conditionalExpressions as $exprString => [$expr, $exprType]) {
-			if ($expr instanceof PropertyFetch) {
-				$expr = $expr->var;
-			}
-			if (!$expr instanceof Variable) {
-				continue;
-			}
-			if (!is_string($expr->name)) {
+		$node = new Variable($targetVariable);
+
+		foreach ($conditionalExpressions as $exprString => $expressionHolders) {
+			if ($exprString !== '$' . $sourceVariable) {
 				continue;
 			}
 
-			if ($expr->name === $sourceVariable) {
-				continue;
-			}
-
-			$newExprString = str_replace('$' .$sourceVariable, '$' .$targetVariable, $exprString);
+			$newExprString = '$' . $targetVariable;
 			if (!isset($conditionalExpressions[$newExprString])) {
 				$conditionalExpressions[$newExprString] = [];
 			}
 
-			$holder = new ConditionalExpressionHolder([
-				'$' . $variableName => ExpressionTypeHolder::createYes(new Variable($variableName), $variableType),
-			], ExpressionTypeHolder::createYes(
-				$expr,
-				TypeCombinator::remove($scope->getType($expr), $exprType),
-			));
-			$conditionalExpressions[$newExprString][$holder->getKey()] = $holder;
+			foreach ($expressionHolders as $expressionHolder) {
+				$newConditionExpressionTypeHolders = [];
+				foreach($expressionHolder->getConditionExpressionTypeHolders() as $conditionExpressionTypeHolder) {
+					$newConditionExpressionTypeHolders['$' . $targetVariable] = new ExpressionTypeHolder(
+						$node,
+						$conditionExpressionTypeHolder->getType(),
+						$conditionExpressionTypeHolder->getCertainty()
+					);
+				}
+
+				$holder = new ConditionalExpressionHolder(
+					$newConditionExpressionTypeHolders,
+					new ExpressionTypeHolder(
+						$node,
+						$expressionHolder->getTypeHolder()->getType(),
+						$expressionHolder->getTypeHolder()->getCertainty(),
+					)
+				);
+
+				$conditionalExpressions[$newExprString][$holder->getKey()] = $holder;
+			}
 		}
 
 		return $conditionalExpressions;
