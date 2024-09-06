@@ -4964,13 +4964,12 @@ final class NodeScopeResolver
 			$conditionalExpressions = $this->processSureNotTypesForConditionalExpressionsAfterAssign($scope, $var->name, $conditionalExpressions, $truthySpecifiedTypes, $truthyType);
 			$conditionalExpressions = $this->processSureTypesForConditionalExpressionsAfterAssign($scope, $var->name, $conditionalExpressions, $falseySpecifiedTypes, $falseyType);
 			$conditionalExpressions = $this->processSureNotTypesForConditionalExpressionsAfterAssign($scope, $var->name, $conditionalExpressions, $falseySpecifiedTypes, $falseyType);
+			if ($assignedExpr instanceof Variable) {
+				$conditionalExpressions = $this->processConditionalExpressionsAfterVariableAssign($scope, $var->name, $assignedExpr->name, $conditionalExpressions);
+			}
 
 			$nodeCallback(new VariableAssignNode($var, $assignedExpr, $isAssignOp), $result->getScope());
-			if ($assignedExpr instanceof Variable) {
-				$scope = $scope->assignVariableFromVariable($var->name, $assignedExpr->name, $type, $scope->getNativeType($assignedExpr));
-			} else {
-				$scope = $scope->assignVariable($var->name, $type, $scope->getNativeType($assignedExpr));
-			}
+			$scope = $scope->assignVariable($var->name, $type, $scope->getNativeType($assignedExpr));
 			foreach ($conditionalExpressions as $exprString => $holders) {
 				$scope = $scope->addConditionalExpressions($exprString, $holders);
 			}
@@ -5435,6 +5434,44 @@ final class NodeScopeResolver
 				TypeCombinator::intersect($scope->getType($expr), $exprType),
 			));
 			$conditionalExpressions[$exprString][$holder->getKey()] = $holder;
+		}
+
+		return $conditionalExpressions;
+	}
+
+	/**
+	 * @param array<string, ConditionalExpressionHolder[]> $conditionalExpressions
+	 * @return array<string, ConditionalExpressionHolder[]>
+	 */
+	private function processConditionalExpressionsAfterVariableAssign(Scope $scope, string $targetVariable, string $sourceVariable, array $conditionalExpressions): array
+	{
+		foreach ($conditionalExpressions as $exprString => [$expr, $exprType]) {
+			if ($expr instanceof PropertyFetch) {
+				$expr = $expr->var;
+			}
+			if (!$expr instanceof Variable) {
+				continue;
+			}
+			if (!is_string($expr->name)) {
+				continue;
+			}
+
+			if ($expr->name === $sourceVariable) {
+				continue;
+			}
+
+			$newExprString = str_replace('$' .$sourceVariable, '$' .$targetVariable, $exprString);
+			if (!isset($conditionalExpressions[$newExprString])) {
+				$conditionalExpressions[$newExprString] = [];
+			}
+
+			$holder = new ConditionalExpressionHolder([
+				'$' . $variableName => ExpressionTypeHolder::createYes(new Variable($variableName), $variableType),
+			], ExpressionTypeHolder::createYes(
+				$expr,
+				TypeCombinator::remove($scope->getType($expr), $exprType),
+			));
+			$conditionalExpressions[$newExprString][$holder->getKey()] = $holder;
 		}
 
 		return $conditionalExpressions;
