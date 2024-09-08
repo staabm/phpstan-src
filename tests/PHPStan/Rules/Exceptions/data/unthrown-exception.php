@@ -790,3 +790,38 @@ class TestIntdivWithRange
 	}
 
 }
+
+class TestBcdiv
+{
+
+	/**
+	 * @param int<-5, 5> $rangeWithZero
+	 * @param int<0, max> $zeroOrMore
+	 * @param int<1, max> $oneOrMore
+	 */
+	public function doFoo(mixed $m, string $s, int $i, int $rangeWithZero, int $zeroOrMore, int $oneOrMore): void
+	{
+		try {
+			bcdiv(1, $i);
+		} catch (\DivisionByZeroError $e) {}
+
+		try {
+			bcdiv(1, $rangeWithZero);
+		} catch (\DivisionByZeroError $e) {}
+		try {
+			bcdiv(1, $zeroOrMore);
+		} catch (\DivisionByZeroError $e) {}
+		try {
+			bcdiv(1, $oneOrMore);
+		} catch (\DivisionByZeroError $e) {}
+
+		try {
+			bcdiv(1, $s);
+		} catch (\DivisionByZeroError $e) {}
+		try {
+			if ($m !== '0') { // test subtractable
+				bcdiv(1, $m);
+			}
+		} catch (\DivisionByZeroError $e) {}
+	}
+}
