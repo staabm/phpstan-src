@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1fa4f06ec0cf6213d6cc617ffcc992d",
+    "content-hash": "002eef45904ac052397f855f5f1febca",
     "packages": [
         {
             "name": "clue/ndjson-react",
@@ -2057,16 +2057,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.3.1",
+            "version": "dev-sub-node-names",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b"
+                "url": "https://github.com/staabm/PHP-Parser.git",
+                "reference": "9a5b30dc15d1bf3d6021792665709374ad0c4f10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8eea230464783aa9671db8eea6f8c6ac5285794b",
-                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b",
+                "url": "https://api.github.com/repos/staabm/PHP-Parser/zipball/9a5b30dc15d1bf3d6021792665709374ad0c4f10",
+                "reference": "9a5b30dc15d1bf3d6021792665709374ad0c4f10",
                 "shasum": ""
             },
             "require": {
@@ -2093,7 +2093,11 @@
                     "PhpParser\\": "lib/PhpParser"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "PhpParser\\": "test/PhpParser/"
+                }
+            },
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2108,10 +2112,9 @@
                 "php"
             ],
             "support": {
-                "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.1"
+                "source": "https://github.com/staabm/PHP-Parser/tree/sub-node-names"
             },
-            "time": "2024-10-08T18:51:32+00:00"
+            "time": "2024-10-07T07:59:02+00:00"
         },
         {
             "name": "ondram/ci-detector",
@@ -6441,10 +6444,18 @@
             "time": "2024-03-03T12:36:25+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "nikic/php-parser",
+            "version": "dev-sub-node-names",
+            "alias": "5.3.2",
+            "alias_normalized": "5.3.2.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "jetbrains/phpstorm-stubs": 20
+        "jetbrains/phpstorm-stubs": 20,
+        "nikic/php-parser": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -6452,7 +6463,7 @@
         "php": "^8.1",
         "composer-runtime-api": "^2.0"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.1.99"
     },
