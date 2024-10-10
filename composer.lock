@@ -2061,12 +2061,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/staabm/PHP-Parser.git",
-                "reference": "9a5b30dc15d1bf3d6021792665709374ad0c4f10"
+                "reference": "a73955f7b9200771e779c6cbbdfded1d5ee4926c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/staabm/PHP-Parser/zipball/9a5b30dc15d1bf3d6021792665709374ad0c4f10",
-                "reference": "9a5b30dc15d1bf3d6021792665709374ad0c4f10",
+                "url": "https://api.github.com/repos/staabm/PHP-Parser/zipball/a73955f7b9200771e779c6cbbdfded1d5ee4926c",
+                "reference": "a73955f7b9200771e779c6cbbdfded1d5ee4926c",
                 "shasum": ""
             },
             "require": {
@@ -2114,7 +2114,7 @@
             "support": {
                 "source": "https://github.com/staabm/PHP-Parser/tree/sub-node-names"
             },
-            "time": "2024-10-07T07:59:02+00:00"
+            "time": "2024-10-10T11:22:53+00:00"
         },
         {
             "name": "ondram/ci-detector",
