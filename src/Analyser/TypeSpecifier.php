@@ -230,7 +230,6 @@ final class TypeSpecifier
 			)->setRootExpr($expr);
 
 		} elseif ($expr instanceof Node\Expr\BinaryOp\Smaller || $expr instanceof Node\Expr\BinaryOp\SmallerOrEqual) {
-
 			if (
 				$expr->left instanceof FuncCall
 				&& count($expr->left->getArgs()) >= 1
@@ -257,6 +256,35 @@ final class TypeSpecifier
 			$offset = $orEqual ? 0 : 1;
 			$leftType = $scope->getType($expr->left);
 			$result = (new SpecifiedTypes([], []))->setRootExpr($expr);
+
+			if (
+				!$context->null()
+				&& $expr->right instanceof Expr\CallLike
+				&& $leftType->isInteger()->yes()
+			) {
+				$sizeType = null;
+				if ($leftType instanceof ConstantIntegerType) {
+					if ($orEqual) {
+						$sizeType = IntegerRangeType::createAllGreaterThanOrEqualTo($leftType->getValue());
+					} else {
+						$sizeType = IntegerRangeType::createAllGreaterThan($leftType->getValue());
+					}
+				} elseif ($leftType instanceof IntegerRangeType) {
+					$sizeType = $leftType;
+				}
+
+				if ($sizeType !== null) {
+					$callReturn = $scope->getType($expr->right);
+					$remainingType = TypeCombinator::intersect($callReturn, $sizeType);
+					$context = $context->withRemainingType($remainingType);
+
+					return $this->specifyTypesInCondition(
+						$scope,
+						$expr->right,
+						$context,
+					)->setRootExpr($expr);
+				}
+			}
 
 			if (
 				!$context->null()
@@ -326,21 +354,6 @@ final class TypeSpecifier
 						);
 					}
 				}
-			}
-
-			if (
-				!$context->null()
-				&& $expr->right instanceof FuncCall
-				&& count($expr->right->getArgs()) >= 3
-				&& $expr->right->name instanceof Name
-				&& in_array(strtolower((string) $expr->right->name), ['preg_match'], true)
-				&& IntegerRangeType::fromInterval(0, null)->isSuperTypeOf($leftType)->yes()
-			) {
-				return $this->specifyTypesInCondition(
-					$scope,
-					new Expr\BinaryOp\NotIdentical($expr->right, new ConstFetch(new Name('false'))),
-					$context,
-				)->setRootExpr($expr);
 			}
 
 			if (

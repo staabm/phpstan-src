@@ -3,6 +3,7 @@
 namespace PHPStan\Analyser;
 
 use PHPStan\ShouldNotHappenException;
+use PHPStan\Type\Type;
 
 /**
  * @api
@@ -20,6 +21,8 @@ final class TypeSpecifierContext
 
 	/** @var self[] */
 	private static array $registry;
+
+	private ?Type $remainingType = null;
 
 	private function __construct(private ?int $value)
 	{
@@ -87,6 +90,18 @@ final class TypeSpecifierContext
 	public function null(): bool
 	{
 		return $this->value === null;
+	}
+
+	public function withRemainingType(Type $remainingType): self
+	{
+		$newContext = self::create($this->value);
+		$newContext->remainingType = $remainingType;
+		return $newContext;
+	}
+
+	public function remainingType(): ?Type
+	{
+		return $this->remainingType;
 	}
 
 }

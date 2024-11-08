@@ -11,6 +11,7 @@ use PHPStan\Analyser\TypeSpecifierContext;
 use PHPStan\Reflection\FunctionReflection;
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\FunctionTypeSpecifyingExtension;
+use PHPStan\Type\IntegerRangeType;
 use function in_array;
 use function strtolower;
 
@@ -44,6 +45,15 @@ final class PregMatchTypeSpecifyingExtension implements FunctionTypeSpecifyingEx
 
 		if (
 			$patternArg === null || $matchesArg === null
+		) {
+			return new SpecifiedTypes();
+		}
+
+		$oneOrMore = IntegerRangeType::fromInterval(1, null);
+		if (
+			$context->true() &&
+			$context->remainingType() !== null &&
+			!$oneOrMore->isSuperTypeOf($context->remainingType())->yes()
 		) {
 			return new SpecifiedTypes();
 		}
