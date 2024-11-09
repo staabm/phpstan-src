@@ -51,7 +51,6 @@ final class PregMatchTypeSpecifyingExtension implements FunctionTypeSpecifyingEx
 
 		$oneOrMore = IntegerRangeType::fromInterval(1, null);
 		if (
-			$context->true() &&
 			$context->remainingType() !== null &&
 			!$oneOrMore->isSuperTypeOf($context->remainingType())->yes()
 		) {

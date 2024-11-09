@@ -1904,6 +1904,7 @@ final class TypeSpecifier
 		if ($expressions !== null) {
 			$exprNode = $expressions[0];
 			$constantType = $expressions[1];
+
 			if (!$context->null() && ($constantType->getValue() === false || $constantType->getValue() === null)) {
 				return $this->specifyTypesInCondition(
 					$scope,
@@ -2127,15 +2128,16 @@ final class TypeSpecifier
 		}
 
 		if (
-			$context->true()
-			&& $unwrappedLeftExpr instanceof FuncCall
-			&& $unwrappedLeftExpr->name instanceof Name
-			&& $unwrappedLeftExpr->name->toLowerString() === 'preg_match'
-			&& (new ConstantIntegerType(1))->isSuperTypeOf($rightType)->yes()
+			!$context->null()
+			&& $unwrappedLeftExpr instanceof Expr\CallLike
 		) {
+			$callReturn = $scope->getType($unwrappedLeftExpr);
+			$remainingType = TypeCombinator::intersect($callReturn, $rightType);
+			$context = $context->withRemainingType($remainingType);
+
 			return $this->specifyTypesInCondition(
 				$scope,
-				$leftExpr,
+				$unwrappedLeftExpr,
 				$context,
 			)->setRootExpr($expr);
 		}
