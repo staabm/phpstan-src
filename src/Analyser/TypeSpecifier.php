@@ -1905,6 +1905,23 @@ final class TypeSpecifier
 			$exprNode = $expressions[0];
 			$constantType = $expressions[1];
 
+			$falsey = StaticTypeFactory::falsey();
+			if (
+				!$context->null()
+				&& $exprNode instanceof Expr\CallLike
+				&& $falsey->isSuperTypeOf($constantType)->yes()
+			) {
+				$callReturn = $scope->getType($exprNode);
+				$remainingType = TypeCombinator::remove($callReturn, $falsey);
+				$context = $context->withRemainingType($remainingType);
+
+				return $this->specifyTypesInCondition(
+					$scope,
+					$exprNode,
+					$context->true() ? TypeSpecifierContext::createFalsey() : TypeSpecifierContext::createFalsey()->negate(),
+				)->setRootExpr($expr);
+			}
+
 			if (!$context->null() && ($constantType->getValue() === false || $constantType->getValue() === null)) {
 				return $this->specifyTypesInCondition(
 					$scope,
