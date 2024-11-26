@@ -4,7 +4,6 @@ namespace PHPStan\Type\Php;
 
 use PhpParser\Node\Expr\FuncCall;
 use PHPStan\Analyser\Scope;
-use PHPStan\Php\PhpVersion;
 use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Type\Accessory\AccessoryLowercaseStringType;
 use PHPStan\Type\Accessory\AccessoryNonEmptyStringType;
@@ -27,10 +26,6 @@ use function substr;
 
 final class SubstrDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-
-	public function __construct(private PhpVersion $phpVersion)
-	{
-	}
 
 	public function isFunctionSupported(FunctionReflection $functionReflection): bool
 	{
@@ -114,7 +109,7 @@ final class SubstrDynamicReturnTypeExtension implements DynamicFunctionReturnTyp
 		if (count($accessoryTypes) > 0) {
 			$accessoryTypes[] = new StringType();
 
-			if (!$isNotEmpty && $this->phpVersion->substrReturnFalseInsteadOfEmptyString()) {
+			if (!$isNotEmpty && !$scope->getPhpVersion()->substrReturnFalseInsteadOfEmptyString()->no()) {
 				return TypeCombinator::union(
 					new ConstantBooleanType(false),
 					new IntersectionType($accessoryTypes),

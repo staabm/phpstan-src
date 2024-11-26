@@ -28,4 +28,9 @@ final class PhpVersions
 		return IntegerRangeType::fromInterval(80000, null)->isSuperTypeOf($this->phpVersions)->result;
 	}
 
+	public function substrReturnFalseInsteadOfEmptyString(): TrinaryLogic
+	{
+		return IntegerRangeType::fromInterval(null, 79999)->isSuperTypeOf($this->phpVersions)->result;
+	}
+
 }
