@@ -5,6 +5,7 @@ namespace PHPStan\Rules\Comparison;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\MethodCall;
+use PHPStan\Analyser\ConstantResolver;
 use PHPStan\Analyser\Scope;
 use PHPStan\Type\BooleanType;
 
@@ -14,6 +15,7 @@ final class ConstantConditionRuleHelper
 	public function __construct(
 		private ImpossibleCheckTypeHelper $impossibleCheckTypeHelper,
 		private bool $treatPhpDocTypesAsCertain,
+		private array $dynamicConstantNames,
 	)
 	{
 	}
@@ -53,6 +55,12 @@ final class ConstantConditionRuleHelper
 		) {
 			$isAlways = $this->impossibleCheckTypeHelper->findSpecifiedType($scope, $expr);
 			if ($isAlways !== null) {
+				return true;
+			}
+		}
+
+		if ($expr instanceof Expr\ConstFetch) {
+			if (in_array($expr->name->toString(), $this->dynamicConstantNames, true)) {
 				return true;
 			}
 		}
