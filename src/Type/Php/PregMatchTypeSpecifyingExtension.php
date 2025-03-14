@@ -73,7 +73,7 @@ final class PregMatchTypeSpecifyingExtension implements FunctionTypeSpecifyingEx
 			$matchedType,
 			$context,
 			$scope,
-		)->setRootExpr($node);
+		);
 		if ($overwrite) {
 			$types = $types->setAlwaysOverwriteTypes();
 		}
