@@ -7,12 +7,10 @@ use function array_key_exists;
 final class RegexAlternation
 {
 
-	/** @var array<int, list<int>> */
-	private array $groupCombinations = [];
-
 	public function __construct(
 		private readonly int $alternationId,
 		private readonly int $alternationsCount,
+		private readonly array $groupCombinations = [],
 	)
 	{
 	}
@@ -22,13 +20,19 @@ final class RegexAlternation
 		return $this->alternationId;
 	}
 
-	public function pushGroup(int $combinationIndex, RegexCapturingGroup $group): void
+	public function pushGroup(int $combinationIndex, RegexCapturingGroup $group): self
 	{
-		if (!array_key_exists($combinationIndex, $this->groupCombinations)) {
-			$this->groupCombinations[$combinationIndex] = [];
+		$groupCombinations = $this->groupCombinations;
+		if (!array_key_exists($combinationIndex, $groupCombinations)) {
+			$groupCombinations[$combinationIndex] = [];
 		}
 
-		$this->groupCombinations[$combinationIndex][] = $group->getId();
+		$groupCombinations[$combinationIndex][] = $group->getId();
+		return new self(
+			$this->alternationId,
+			$this->alternationsCount,
+			$groupCombinations,
+		);
 	}
 
 	public function getAlternationsCount(): int
