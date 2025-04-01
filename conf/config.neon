@@ -61,8 +61,8 @@ parameters:
 	reportStaticMethodSignatures: false
 	reportWrongPhpDocTypeInVarTag: false
 	reportAnyTypeWideningInVarTag: false
-	reportPossiblyNonexistentGeneralArrayOffset: false
-	reportPossiblyNonexistentConstantArrayOffset: false
+	reportPossiblyNonexistentGeneralArrayOffset: true
+	reportPossiblyNonexistentConstantArrayOffset: true
 	checkMissingOverrideMethodAttribute: false
 	mixinExcludeClasses: []
 	scanFiles: []
