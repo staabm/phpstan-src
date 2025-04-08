@@ -10,6 +10,20 @@ use PHPStan\Command\WorkerCommand;
 use PHPStan\Internal\ComposerHelper;
 use Symfony\Component\Console\Helper\ProgressBar;
 
+require_once __DIR__.'/../src/caller.php';
+
+function my_array_map(...$args): array
+{
+	$caller = getCallerInfo();
+	if ($caller !== null) {
+		file_put_contents(__DIR__.'/../array_map.log', $caller.PHP_EOL, FILE_APPEND);
+	}
+
+
+	return array_map(...$args);
+}
+
+
 (function () {
 	error_reporting(E_ALL & ~E_DEPRECATED);
 	ini_set('display_errors', 'stderr');
