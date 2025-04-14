@@ -643,7 +643,7 @@ final class FunctionCallParametersCheck
 			}
 		}
 
-		// fill up all holes with default values until the last given argument
+		// append default values for skipped parameters
 		foreach($unusedParametersByName as $paramName => $unusedParameter) {
 			for ($i = 0; $i < count($parameters); $i++) {
 				if ($parameters[$i]->getName() !== $paramName) {
@@ -666,8 +666,7 @@ final class FunctionCallParametersCheck
 				if ($defaultValueType === null || $parameters[$i]->getType() instanceof NeverType) {
 					break;
 				}
-
-				$newArguments[] = [new TypeExpr($defaultValueType), $defaultValueType, false, null, $line, $parameters[$i], $originalParameters[$i]];
+				$newArguments[] = [new TypeExpr($defaultValueType), $defaultValueType, false, $paramName, $line, $parameters[$i], $originalParameters[$i]];
 
 				continue 2;
 			}

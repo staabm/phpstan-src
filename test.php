@@ -36,10 +36,11 @@ class Car
 
 function doIt() {
 	/*
-	$bimCar = new Car("bim"); // expected error as bar argument is null by default
+	$bimCar = new Car("bim"); // $bar expects string|null, int given
 	$bimCarWithNullBar = new Car("bim", null);
 	$boomCar = new Car("boom");
 	$bimCarWithBar = new Car("bim", "test");
+	$bimCarWithNullBarNamed = new Car(bar: null, foo: "bim"); // $bar expects string|null, int given
 	*/
 }
 
@@ -52,7 +53,7 @@ function methodCall(Car $car) {
 	$car->dooFoo("", "bim", "y", bar: "world", z: 15); // fine
 	$car->dooFoo("", "bim", "y", bar: null, z: 15); // fine
 	$car->dooFoo("", "bim", "y", z: 15); // expected error as bar argument is null by default
-	$car->dooFoo("", "boom", "y", bar: 4); // fine
+	$car->dooFoo("", "boom", "y", bar: 4); // $bar expects string|null, int given
 	$car->dooFoo("", "boom", bar: 4, y: "y"); // $bar expects string|null, int given
 	$car->dooFoo("", "boom", y: "y", z: 15); // fine
 }
