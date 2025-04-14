@@ -6,6 +6,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PHPStan\Analyser\MutatingScope;
 use PHPStan\Analyser\Scope;
+use PHPStan\Node\Expr\TypeExpr;
 use PHPStan\Reflection\ExtendedParameterReflection;
 use PHPStan\Reflection\ParameterReflection;
 use PHPStan\Reflection\ParametersAcceptor;
@@ -641,6 +642,37 @@ final class FunctionCallParametersCheck
 					->build();
 			}
 		}
+
+		// fill up all holes with default values until the last given argument
+		foreach($unusedParametersByName as $paramName => $unusedParameter) {
+			for ($i = 0; $i < count($parameters); $i++) {
+				if ($parameters[$i]->getName() !== $paramName) {
+					continue;
+				}
+
+				if (!array_key_exists($i, $originalParameters)) {
+					break;
+				}
+
+				if (
+					!$parameters[$i]->isOptional()
+					|| $parameters[$i]->isVariadic()
+					|| !$parameters[$i]->passedByReference()->no()
+				) {
+					break;
+				}
+
+				$defaultValueType = ($originalParameters[$i] ?? $parameters[$i])->getDefaultValue();
+				if ($defaultValueType === null || $parameters[$i]->getType() instanceof NeverType) {
+					break;
+				}
+
+				$newArguments[] = [new TypeExpr($defaultValueType), $defaultValueType, false, null, $line, $parameters[$i], $originalParameters[$i]];
+
+				continue 2;
+			}
+		}
+
 
 		return [$errors, $newArguments];
 	}
