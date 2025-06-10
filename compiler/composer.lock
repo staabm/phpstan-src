@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4fa60d8069185677658793b274897b29",
+    "content-hash": "d2140cf43c47b986404e6a12b6f396a0",
     "packages": [
         {
             "name": "jetbrains/phpstorm-stubs",
@@ -339,16 +339,16 @@
         },
         {
             "name": "ondrejmirtes/simple-downgrader",
-            "version": "2.1.8",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ondrejmirtes/simple-downgrader.git",
-                "reference": "d06358fee2f120c74b41f8c1f8b1f205e2b579c6"
+                "reference": "11ae2123b294b8b02861b9fd494c3860a9480d74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ondrejmirtes/simple-downgrader/zipball/d06358fee2f120c74b41f8c1f8b1f205e2b579c6",
-                "reference": "d06358fee2f120c74b41f8c1f8b1f205e2b579c6",
+                "url": "https://api.github.com/repos/ondrejmirtes/simple-downgrader/zipball/11ae2123b294b8b02861b9fd494c3860a9480d74",
+                "reference": "11ae2123b294b8b02861b9fd494c3860a9480d74",
                 "shasum": ""
             },
             "require": {
@@ -384,9 +384,9 @@
             "description": "Simple Downgrader",
             "support": {
                 "issues": "https://github.com/ondrejmirtes/simple-downgrader/issues",
-                "source": "https://github.com/ondrejmirtes/simple-downgrader/tree/2.1.8"
+                "source": "https://github.com/ondrejmirtes/simple-downgrader/tree/2.2.0"
             },
-            "time": "2025-06-10T08:25:55+00:00"
+            "time": "2025-06-10T10:37:23+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
