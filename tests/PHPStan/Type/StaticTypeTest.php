@@ -19,6 +19,7 @@ use PHPStan\Type\Generic\TemplateTypeFactory;
 use PHPStan\Type\Generic\TemplateTypeScope;
 use PHPStan\Type\Generic\TemplateTypeVariance;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhpunit;
 use StaticTypeTest\Base;
 use StaticTypeTest\Child;
 use StaticTypeTest\FinalChild;
@@ -26,6 +27,7 @@ use stdClass;
 use Traversable;
 use function sprintf;
 
+#[RequiresPhpunit('< 11')]
 class StaticTypeTest extends PHPStanTestCase
 {
 

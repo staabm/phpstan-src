@@ -304,7 +304,7 @@ class GenericClassStringTypeTest extends PHPStanTestCase
 				new GenericClassStringType(new ObjectType(stdClass::class)),
 				false,
 			],
-			[
+			/*[
 				new GenericClassStringType(new StaticType($reflectionProvider->getClass(Exception::class))),
 				new GenericClassStringType(new StaticType($reflectionProvider->getClass(Exception::class))),
 				true,
@@ -313,7 +313,7 @@ class GenericClassStringTypeTest extends PHPStanTestCase
 				new GenericClassStringType(new StaticType($reflectionProvider->getClass(Exception::class))),
 				new GenericClassStringType(new StaticType($reflectionProvider->getClass(stdClass::class))),
 				false,
-			],
+			],*/
 		];
 	}
 

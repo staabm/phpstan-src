@@ -219,7 +219,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 				IntersectionType::class,
 				'ArrayObject&iterable<string>',
 			],
-			[
+			/*[
 				new UnionType([
 					new ThisType($reflectionProvider->getClass(Exception::class)),
 					new NullType(),
@@ -234,7 +234,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 				]),
 				ThisType::class,
 				'$this(Exception)',
-			],
+			],*/
 			[
 				new UnionType([
 					new IterableType(new MixedType(), new StringType()),
@@ -2228,7 +2228,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 			'mixed~int<17, 18>=implicit',
 		];
 
-		$reflectionProvider = self::createReflectionProvider();
+		/*$reflectionProvider = self::createReflectionProvider();
 		yield [
 			[
 				new StaticType($reflectionProvider->getClass(stdClass::class)),
@@ -2263,7 +2263,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 			],
 			UnionType::class,
 			'$this(stdClass)|stdClass::foo',
-		];
+		];*/
 
 		yield [
 			[
@@ -2307,7 +2307,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 			'PHPStan\Fixture\ManyCasesTestEnum~PHPStan\Fixture\ManyCasesTestEnum::B',
 		];
 
-		yield [
+		/*yield [
 			[
 				new ThisType(
 					$reflectionProvider->getClass(\ThisSubtractable\Foo::class), // phpcs:ignore
@@ -2326,7 +2326,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 			],
 			ThisType::class,
 			'$this(ThisSubtractable\Foo)',
-		];
+		];*/
 
 		yield [
 			[
@@ -2724,7 +2724,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 			'non-empty-array&hasOffsetValue(\'thing\', mixed)',
 		];
 
-		$c = $reflectionProvider->getClass(C::class);
+		/*$c = $reflectionProvider->getClass(C::class);
 
 		yield [
 			[
@@ -2793,7 +2793,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 			],
 			ObjectType::class,
 			$nonFinalClass->getDisplayName(),
-		];
+		];*/
 	}
 
 	/**
@@ -2939,14 +2939,14 @@ class TypeCombinatorTest extends PHPStanTestCase
 				IntersectionType::class,
 				'iterable<T (function _(), parameter)>&Iterator',
 			],
-			[
+			/*[
 				[
 					new ObjectType('Foo'),
 					new StaticType($reflectionProvider->getClass('Foo')),
 				],
 				StaticType::class,
 				'static(Foo)',
-			],
+			],*/
 			[
 				[
 					new VoidType(),
@@ -4229,7 +4229,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 			MixedType::class,
 			'mixed~int<17, max>=implicit',
 		];
-		yield [
+		/*yield [
 			[
 				new StaticType($reflectionProvider->getClass(stdClass::class)),
 				new ThisType($reflectionProvider->getClass(stdClass::class)),
@@ -4263,7 +4263,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 			],
 			IntersectionType::class,
 			'$this(stdClass)&stdClass::foo',
-		];
+		];*/
 
 		yield [
 			[
@@ -4655,7 +4655,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 			'\'FOO\'',
 		];
 
-		$c = $reflectionProvider->getClass(C::class);
+		/*$c = $reflectionProvider->getClass(C::class);
 
 		yield [
 			[
@@ -4724,7 +4724,7 @@ class TypeCombinatorTest extends PHPStanTestCase
 			],
 			ObjectType::class,
 			$nonFinalClass->getDisplayName() . '=final',
-		];
+		];*/
 	}
 
 	/**

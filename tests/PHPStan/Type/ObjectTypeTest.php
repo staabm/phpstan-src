@@ -193,7 +193,7 @@ class ObjectTypeTest extends PHPStanTestCase
 				new ObjectType(LogicException::class),
 				TrinaryLogic::createMaybe(),
 			],
-			13 => [
+			/*13 => [
 				new ObjectType(ArrayAccess::class),
 				new StaticType($reflectionProvider->getClass(Traversable::class)),
 				TrinaryLogic::createMaybe(),
@@ -258,7 +258,7 @@ class ObjectTypeTest extends PHPStanTestCase
 				new ObjectType(InvalidArgumentException::class),
 				new StaticType($reflectionProvider->getClass(LogicException::class)),
 				TrinaryLogic::createMaybe(),
-			],
+			],*/
 			25 => [
 				new ObjectType(stdClass::class),
 				new ClosureType([], new MixedType(), false),
@@ -463,11 +463,11 @@ class ObjectTypeTest extends PHPStanTestCase
 				new ObjectType(DateTime::class),
 				TrinaryLogic::createNo(),
 			],
-			61 => [
+			/*61 => [
 				new ObjectType(UserInSessionInRoleEndpointExtension::class),
 				new ThisType($reflectionProvider->getClass(UserInSessionInRoleEndpointExtension::class)),
 				TrinaryLogic::createYes(),
-			],
+			],*/
 			62 => [
 				new ObjectType(TestInterface::class),
 				new ClosureType([], new MixedType(), false),

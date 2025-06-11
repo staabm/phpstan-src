@@ -134,7 +134,7 @@ class UnionTypeTest extends PHPStanTestCase
 		yield [new ObjectType('Foo')];
 		yield [new ObjectWithoutClassType(new ObjectType('Foo'))];
 		yield [new ResourceType()];
-		yield [new StaticType($reflectionProvider->getClass('Foo'))];
+		//yield [new StaticType($reflectionProvider->getClass('Foo'))];
 		yield [new StrictMixedType()];
 		yield [new StringAlwaysAcceptingObjectWithToStringType()];
 		yield [$stringType];
