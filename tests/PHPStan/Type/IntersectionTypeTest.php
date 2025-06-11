@@ -18,12 +18,12 @@ use PHPStan\Type\Constant\ConstantIntegerType;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\Enum\EnumCaseObjectType;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use stdClass;
 use Test\ClassWithToString;
 use Traversable;
 use function count;
 use function sprintf;
-use const PHP_VERSION_ID;
 
 class IntersectionTypeTest extends PHPStanTestCase
 {
@@ -357,35 +357,18 @@ class IntersectionTypeTest extends PHPStanTestCase
 		$this->assertSame('true', $type->toBoolean()->describe(VerbosityLevel::precise()));
 	}
 
-	public static function dataGetEnumCases(): iterable
+	#[RequiresPhp('>= 8.1')]
+	public function testGetEnumCases(): void
 	{
-		if (PHP_VERSION_ID < 80100) {
-			return [];
-		}
-
 		$reflectionProvider = self::createReflectionProvider();
 		$classReflection = $reflectionProvider->getClass(FooEnum::class);
-
-		yield [
-			new IntersectionType([
-				new ThisType($classReflection),
-				new EnumCaseObjectType(FooEnum::class, 'FOO'),
-			]),
-			[
-				new EnumCaseObjectType(FooEnum::class, 'FOO'),
-			],
+		$type = new IntersectionType([
+			new ThisType($classReflection),
+			new EnumCaseObjectType(FooEnum::class, 'FOO'),
+		]);
+		$expectedEnumCases = [
+			new EnumCaseObjectType(FooEnum::class, 'FOO'),
 		];
-	}
-
-	/**
-	 * @param list<EnumCaseObjectType> $expectedEnumCases
-	 */
-	#[DataProvider('dataGetEnumCases')]
-	public function testGetEnumCases(
-		IntersectionType $type,
-		array $expectedEnumCases,
-	): void
-	{
 		$enumCases = $type->getEnumCases();
 		$this->assertCount(count($expectedEnumCases), $enumCases);
 		foreach ($enumCases as $i => $enumCase) {
