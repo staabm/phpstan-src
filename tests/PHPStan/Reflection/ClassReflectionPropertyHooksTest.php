@@ -19,7 +19,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		$reflectionProvider = self::createReflectionProvider();
 
 		yield [
-			'PropertyHooksTypes\\Foo',
+			$reflectionProvider->getClass('PropertyHooksTypes\\Foo'),
 			'i',
 			'set',
 			['int'],
@@ -28,7 +28,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\Foo',
+			$reflectionProvider->getClass('PropertyHooksTypes\\Foo'),
 			'i',
 			'get',
 			[],
@@ -37,7 +37,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\Foo',
+			$reflectionProvider->getClass('PropertyHooksTypes\\Foo'),
 			'l',
 			'get',
 			[],
@@ -46,7 +46,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\Foo',
+			$reflectionProvider->getClass('PropertyHooksTypes\\Foo'),
 			'n',
 			'set',
 			['array<string>|int'],
@@ -55,7 +55,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooShort',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooShort'),
 			'i',
 			'set',
 			['int'],
@@ -64,7 +64,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooShort',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooShort'),
 			'k',
 			'set',
 			['int|string'],
@@ -73,7 +73,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooShort',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooShort'),
 			'l',
 			'set',
 			['array<string>'],
@@ -82,7 +82,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooShort',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooShort'),
 			'm',
 			'set',
 			['array<string>'],
@@ -91,7 +91,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooShort',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooShort'),
 			'n',
 			'set',
 			['array<string>|int'],
@@ -100,7 +100,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooConstructor',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooConstructor'),
 			'i',
 			'set',
 			['int'],
@@ -109,7 +109,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooConstructor',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooConstructor'),
 			'j',
 			'set',
 			['int'],
@@ -118,7 +118,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooConstructor',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooConstructor'),
 			'k',
 			'set',
 			['int|string'],
@@ -127,7 +127,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooConstructor',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooConstructor'),
 			'l',
 			'set',
 			['array<string>'],
@@ -136,7 +136,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooConstructor',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooConstructor'),
 			'l',
 			'get',
 			[],
@@ -145,7 +145,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooConstructor',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooConstructor'),
 			'm',
 			'set',
 			['array<string>'],
@@ -154,7 +154,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooConstructor',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooConstructor'),
 			'n',
 			'set',
 			['array<string>|int'],
@@ -163,7 +163,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooConstructorWithParam',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooConstructorWithParam'),
 			'l',
 			'set',
 			['array<string>'],
@@ -172,7 +172,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooConstructorWithParam',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooConstructorWithParam'),
 			'l',
 			'get',
 			[],
@@ -181,7 +181,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooConstructorWithParam',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooConstructorWithParam'),
 			'm',
 			'set',
 			['array<string>'],
@@ -190,7 +190,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooGenerics',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooGenerics'),
 			'm',
 			'set',
 			['array<T of stdClass (class PropertyHooksTypes\FooGenerics, parameter)>'],
@@ -199,7 +199,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooGenerics',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooGenerics'),
 			'n',
 			'set',
 			['array<T of stdClass (class PropertyHooksTypes\FooGenerics, parameter)>|int'],
@@ -208,7 +208,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooGenerics',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooGenerics'),
 			'm',
 			'get',
 			[],
@@ -217,7 +217,7 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			'PropertyHooksTypes\\FooGenerics',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooGenerics'),
 			'n',
 			'get',
 			[],
@@ -225,84 +225,25 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 			true,
 		];
 
+		$specificFooGenerics = (new GenericObjectType('PropertyHooksTypes\\FooGenerics', [new IntegerType()]))->getClassReflection();
+
 		yield [
-			'PropertyHooksTypes\\FooGenerics',
+			$specificFooGenerics,
+			'n',
+			'set',
+			['array<int>|int'],
+			'void',
+			true,
+		];
+
+		yield [
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooGenerics'),
 			'n',
 			'get',
 			[],
 			'int',
 			true,
 		];
-
-		yield [
-			'PropertyHooksTypes\\FooGenerics',
-			'm',
-			'get',
-			[],
-			'array<T of stdClass (class PropertyHooksTypes\FooGenerics, parameter)>',
-			true,
-		];
-
-		yield [
-			'PropertyHooksTypes\\FooGenericsConstructor',
-			'l',
-			'set',
-			['array<T of stdClass (class PropertyHooksTypes\FooGenericsConstructor, parameter)>'],
-			'void',
-			true,
-		];
-
-		yield [
-			'PropertyHooksTypes\\FooGenericsConstructor',
-			'm',
-			'set',
-			['array<T of stdClass (class PropertyHooksTypes\FooGenericsConstructor, parameter)>'],
-			'void',
-			true,
-		];
-
-		yield [
-			'PropertyHooksTypes\\FooGenericsConstructor',
-			'n',
-			'set',
-			['array<T of stdClass (class PropertyHooksTypes\FooGenericsConstructor, parameter)>|int'],
-			'void',
-			true,
-		];
-	}
-
-	/**
-	 * @param ExtendedPropertyReflection::HOOK_* $hookName
-	 * @param string[] $parameterTypes
-	 */
-	#[DataProvider('dataPropertyHooks')]
-	public function testPropertyHooks(
-		string $className,
-		string $propertyName,
-		string $hookName,
-		array $parameterTypes,
-		string $returnType,
-		bool $isVirtual,
-	): void
-	{
-		$reflectionProvider = $this->createReflectionProvider();
-		$classReflection = $reflectionProvider->getClass($className);
-		$propertyReflection = $classReflection->getNativeProperty($propertyName);
-		$this->assertSame($isVirtual, $propertyReflection->isVirtual()->yes());
-
-		$hookReflection = $propertyReflection->getHook($hookName);
-		$hookVariant = $hookReflection->getOnlyVariant();
-		$this->assertSame($returnType, $hookVariant->getReturnType()->describe(VerbosityLevel::precise()));
-		$this->assertCount(count($parameterTypes), $hookVariant->getParameters());
-
-		foreach ($hookVariant->getParameters() as $i => $parameter) {
-			$this->assertSame($parameterTypes[$i], $parameter->getType()->describe(VerbosityLevel::precise()));
-		}
-	}
-
-	public static function dataPropertyHooksFromType(): iterable
-	{
-		$specificFooGenerics = new GenericObjectType('PropertyHooksTypes\\FooGenerics', [new IntegerType()]);
 
 		yield [
 			$specificFooGenerics,
@@ -314,15 +255,42 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		];
 
 		yield [
-			$specificFooGenerics,
-			'n',
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooGenerics'),
+			'm',
+			'get',
+			[],
+			'array<T of stdClass (class PropertyHooksTypes\FooGenerics, parameter)>',
+			true,
+		];
+
+		yield [
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooGenericsConstructor'),
+			'l',
 			'set',
-			['array<int>|int'],
+			['array<T of stdClass (class PropertyHooksTypes\FooGenericsConstructor, parameter)>'],
 			'void',
 			true,
 		];
 
-		$specificFooGenericsConstructor = new GenericObjectType('PropertyHooksTypes\\FooGenericsConstructor', [new IntegerType()]);
+		yield [
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooGenericsConstructor'),
+			'm',
+			'set',
+			['array<T of stdClass (class PropertyHooksTypes\FooGenericsConstructor, parameter)>'],
+			'void',
+			true,
+		];
+
+		yield [
+			$reflectionProvider->getClass('PropertyHooksTypes\\FooGenericsConstructor'),
+			'n',
+			'set',
+			['array<T of stdClass (class PropertyHooksTypes\FooGenericsConstructor, parameter)>|int'],
+			'void',
+			true,
+		];
+
+		$specificFooGenericsConstructor = (new GenericObjectType('PropertyHooksTypes\\FooGenericsConstructor', [new IntegerType()]))->getClassReflection();
 
 		yield [
 			$specificFooGenericsConstructor,
@@ -356,9 +324,9 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 	 * @param ExtendedPropertyReflection::HOOK_* $hookName
 	 * @param string[] $parameterTypes
 	 */
-	#[DataProvider('dataPropertyHooksFromType')]
-	public function testPropertyHooksFromType(
-		GenericObjectType $type,
+	#[DataProvider('dataPropertyHooks')]
+	public function testPropertyHooks(
+		ClassReflection $classReflection,
 		string $propertyName,
 		string $hookName,
 		array $parameterTypes,
@@ -366,8 +334,6 @@ class ClassReflectionPropertyHooksTest extends PHPStanTestCase
 		bool $isVirtual,
 	): void
 	{
-		$classReflection = $type->getClassReflection();
-		$this->assertNotNull($classReflection);
 		$propertyReflection = $classReflection->getNativeProperty($propertyName);
 		$this->assertSame($isVirtual, $propertyReflection->isVirtual()->yes());
 
