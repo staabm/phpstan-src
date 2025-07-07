@@ -109,6 +109,7 @@ final class AnalyseCommand extends Command
 				new InputOption('watch', mode: InputOption::VALUE_NONE, description: 'Launch PHPStan Pro'),
 				new InputOption('pro', mode: InputOption::VALUE_NONE, description: 'Launch PHPStan Pro'),
 				new InputOption('fail-without-result-cache', mode: InputOption::VALUE_NONE, description: 'Return non-zero exit code when result cache is not used'),
+				new InputOption('stop-on-first-error', mode: InputOption::VALUE_NONE, description: 'Stop analysis after one error was found'),
 			]);
 	}
 
@@ -147,6 +148,7 @@ final class AnalyseCommand extends Command
 		$pro = (bool) $input->getOption('watch') || (bool) $input->getOption('pro');
 		$fix = (bool) $input->getOption('fix');
 		$failWithoutResultCache = (bool) $input->getOption('fail-without-result-cache');
+		$stopOnFirstError = (bool) $input->getOption('stop-on-first-error');
 
 		/** @var string|false|null $generateBaselineFile */
 		$generateBaselineFile = $input->getOption('generate-baseline');
@@ -352,6 +354,7 @@ final class AnalyseCommand extends Command
 				$inceptionResult->getEditorModeTmpFile(),
 				$inceptionResult->getEditorModeInsteadOfFile(),
 				$input,
+				$stopOnFirstError,
 			);
 		} catch (Throwable $t) {
 			if ($debug) {

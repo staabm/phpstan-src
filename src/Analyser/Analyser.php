@@ -44,6 +44,7 @@ final class Analyser
 		?Closure $postFileCallback = null,
 		bool $debug = false,
 		?array $allAnalysedFiles = null,
+		bool $stopOnFirstError = false,
 	): AnalyserResult
 	{
 		if ($allAnalysedFiles === null) {
@@ -102,6 +103,10 @@ final class Analyser
 				if (count($fileExportedNodes) > 0) {
 					$exportedNodes[$file] = $fileExportedNodes;
 				}
+
+				if ($stopOnFirstError) {
+					break;
+				}
 			} catch (Throwable $t) {
 				if ($debug) {
 					throw $t;
@@ -140,6 +145,7 @@ final class Analyser
 			$exportedNodes,
 			$reachedInternalErrorsCountLimit,
 			memory_get_peak_usage(true),
+			$stopOnFirstError,
 		);
 	}
 

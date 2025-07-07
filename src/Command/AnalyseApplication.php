@@ -58,6 +58,7 @@ final class AnalyseApplication
 		?string $tmpFile,
 		?string $insteadOfFile,
 		InputInterface $input,
+		bool $stopOnFirstError,
 	): AnalysisResult
 	{
 		$isResultCacheUsed = false;
@@ -91,6 +92,7 @@ final class AnalyseApplication
 				$stdOutput,
 				$errorOutput,
 				$input,
+				$stopOnFirstError,
 			);
 
 			$projectStubFiles = $this->stubFilesProvider->getProjectStubFiles();
@@ -116,10 +118,11 @@ final class AnalyseApplication
 					$intermediateAnalyserResult->getExportedNodes(),
 					$intermediateAnalyserResult->hasReachedInternalErrorsCountLimit(),
 					$intermediateAnalyserResult->getPeakMemoryUsageBytes(),
+					$stopOnFirstError,
 				);
 			}
 
-			$resultCacheResult = $resultCacheManager->process($intermediateAnalyserResult, $resultCache, $errorOutput, $onlyFiles, true);
+			$resultCacheResult = $resultCacheManager->process($intermediateAnalyserResult, $resultCache, $errorOutput, $onlyFiles, true, $stopOnFirstError);
 			$analyserResult = $this->analyserResultFinalizer->finalize(
 				$this->switchTmpFileInAnalyserResult($resultCacheResult->getAnalyserResult(), $insteadOfFile, $tmpFile),
 				$onlyFiles,
@@ -212,6 +215,7 @@ final class AnalyseApplication
 		Output $stdOutput,
 		Output $errorOutput,
 		InputInterface $input,
+		bool $stopOnFirstError,
 	): AnalyserResult
 	{
 		$filesCount = count($files);
@@ -220,7 +224,7 @@ final class AnalyseApplication
 			$errorOutput->getStyle()->progressStart($allAnalysedFilesCount);
 			$errorOutput->getStyle()->progressAdvance($allAnalysedFilesCount);
 			$errorOutput->getStyle()->progressFinish();
-			return new AnalyserResult([], [], [], [], [], [], [], [], [], [], [], false, memory_get_peak_usage(true));
+			return new AnalyserResult([], [], [], [], [], [], [], [], [], [], [], false, memory_get_peak_usage(true), $stopOnFirstError);
 		}
 
 		if (!$debug) {
@@ -252,7 +256,7 @@ final class AnalyseApplication
 			}
 		}
 
-		$analyserResult = $this->analyserRunner->runAnalyser($files, $allAnalysedFiles, $preFileCallback, $postFileCallback, $debug, true, $projectConfigFile, $tmpFile, $insteadOfFile, $input);
+		$analyserResult = $this->analyserRunner->runAnalyser($files, $allAnalysedFiles, $preFileCallback, $postFileCallback, $debug, true, $projectConfigFile, $tmpFile, $insteadOfFile, $input, $stopOnFirstError);
 
 		if (!$debug) {
 			$errorOutput->getStyle()->progressFinish();
@@ -312,6 +316,7 @@ final class AnalyseApplication
 			$exportedNodes,
 			$analyserResult->hasReachedInternalErrorsCountLimit(),
 			$analyserResult->getPeakMemoryUsageBytes(),
+			$analyserResult->hasStopOnFirstError(),
 		);
 	}
 

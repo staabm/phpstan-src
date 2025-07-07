@@ -50,11 +50,12 @@ final class AnalyserRunner
 		?string $tmpFile,
 		?string $insteadOfFile,
 		InputInterface $input,
+		bool $stopOnFirstError,
 	): AnalyserResult
 	{
 		$filesCount = count($files);
 		if ($filesCount === 0) {
-			return new AnalyserResult([], [], [], [], [], [], [], [], [], [], [], false, memory_get_peak_usage(true));
+			return new AnalyserResult([], [], [], [], [], [], [], [], [], [], [], false, memory_get_peak_usage(true), $stopOnFirstError);
 		}
 
 		$schedule = $this->scheduler->scheduleWork($this->cpuCoreCounter->getNumberOfCpuCores(), $files);
@@ -72,7 +73,7 @@ final class AnalyserRunner
 		) {
 			$loop = new StreamSelectLoop();
 			$result = null;
-			$promise = $this->parallelAnalyser->analyse($loop, $schedule, $mainScript, $postFileCallback, $projectConfigFile, $tmpFile, $insteadOfFile, $input, null);
+			$promise = $this->parallelAnalyser->analyse($loop, $schedule, $mainScript, $postFileCallback, $projectConfigFile, $tmpFile, $insteadOfFile, $input, null, $stopOnFirstError);
 			$promise->then(static function (AnalyserResult $tmp) use (&$result): void {
 				$result = $tmp;
 			});
@@ -89,6 +90,7 @@ final class AnalyserRunner
 			$postFileCallback,
 			$debug,
 			$this->switchTmpFile($allAnalysedFiles, $insteadOfFile, $tmpFile),
+			$stopOnFirstError,
 		);
 	}
 

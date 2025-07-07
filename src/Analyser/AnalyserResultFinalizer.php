@@ -148,6 +148,7 @@ final class AnalyserResultFinalizer
 			$analyserResult->getExportedNodes(),
 			$analyserResult->hasReachedInternalErrorsCountLimit(),
 			$analyserResult->getPeakMemoryUsageBytes(),
+			$analyserResult->hasStopOnFirstError(),
 		), $collectorErrors, $locallyIgnoredCollectorErrors);
 	}
 
@@ -167,6 +168,7 @@ final class AnalyserResultFinalizer
 			$analyserResult->getExportedNodes(),
 			$analyserResult->hasReachedInternalErrorsCountLimit(),
 			$analyserResult->getPeakMemoryUsageBytes(),
+			$analyserResult->hasStopOnFirstError(),
 		);
 	}
 
@@ -231,6 +233,7 @@ final class AnalyserResultFinalizer
 				$analyserResult->getExportedNodes(),
 				$analyserResult->hasReachedInternalErrorsCountLimit(),
 				$analyserResult->getPeakMemoryUsageBytes(),
+				$analyserResult->hasStopOnFirstError(),
 			),
 			$collectorErrors,
 			$locallyIgnoredCollectorErrors,

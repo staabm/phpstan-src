@@ -4,6 +4,7 @@ namespace PHPStan\Analyser;
 
 use PHPStan\Collectors\CollectedData;
 use PHPStan\Dependency\RootExportedNode;
+use function array_shift;
 use function usort;
 
 /**
@@ -43,8 +44,14 @@ final class AnalyserResult
 		private array $exportedNodes,
 		private bool $reachedInternalErrorsCountLimit,
 		private int $peakMemoryUsageBytes,
+		private bool $stopOnFirstError,
 	)
 	{
+		if (!$this->stopOnFirstError || $this->unorderedErrors === []) {
+			return;
+		}
+
+		$this->unorderedErrors = [array_shift($this->unorderedErrors)];
 	}
 
 	/**
@@ -167,6 +174,11 @@ final class AnalyserResult
 	public function getPeakMemoryUsageBytes(): int
 	{
 		return $this->peakMemoryUsageBytes;
+	}
+
+	public function hasStopOnFirstError(): bool
+	{
+		return $this->stopOnFirstError;
 	}
 
 }
