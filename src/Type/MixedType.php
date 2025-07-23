@@ -169,7 +169,10 @@ class MixedType implements CompoundType, SubtractableType
 
 	public function setExistingOffsetValueType(Type $offsetType, Type $valueType): Type
 	{
-		return new self($this->isExplicitMixed);
+		return TypeCombinator::intersect(
+			new self($this->isExplicitMixed),
+			new IterableType(new MixedType(), new MixedType())
+		);
 	}
 
 	public function unsetOffset(Type $offsetType): Type
