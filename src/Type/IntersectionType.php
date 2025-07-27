@@ -180,8 +180,8 @@ class IntersectionType implements CompoundType
 	{
 		$arrayKeys = [];
 		foreach ($this->types as $type) {
-			foreach ($type->getConstantArrayKeys() as $string) {
-				$arrayKeys[] = $string;
+			foreach ($type->getConstantArrayKeys() as $arrayKey) {
+				$arrayKeys[] = $arrayKey;
 			}
 		}
 
