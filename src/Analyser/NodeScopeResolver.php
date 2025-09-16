@@ -86,6 +86,7 @@ use PHPStan\Node\DoWhileLoopConditionNode;
 use PHPStan\Node\ExecutionEndNode;
 use PHPStan\Node\Expr\AlwaysRememberedExpr;
 use PHPStan\Node\Expr\ExistingArrayDimFetch;
+use PHPStan\Node\Expr\ExprUsedAsStringNode;
 use PHPStan\Node\Expr\GetIterableKeyTypeExpr;
 use PHPStan\Node\Expr\GetIterableValueTypeExpr;
 use PHPStan\Node\Expr\GetOffsetValueTypeExpr;
@@ -851,6 +852,7 @@ final class NodeScopeResolver
 				$scope = $result->getScope();
 				$hasYield = $hasYield || $result->hasYield();
 				$isAlwaysTerminating = $isAlwaysTerminating || $result->isAlwaysTerminating();
+				$nodeCallback(new ExprUsedAsStringNode($echoExpr));
 			}
 
 			$throwPoints = $overridingThrowPoints ?? $throwPoints;
@@ -2062,6 +2064,8 @@ final class NodeScopeResolver
 			$impurePoints = [
 				new ImpurePoint($scope, $stmt, 'betweenPhpTags', 'output between PHP opening and closing tags', true),
 			];
+
+			$nodeCallback(new ExprUsedAsStringNode(new Node\Scalar\String_($stmt->value)));
 		} elseif ($stmt instanceof Node\Stmt\Block) {
 			$result = $this->processStmtNodes($stmt, $stmt->stmts, $scope, $nodeCallback, $context);
 			if ($this->polluteScopeWithBlock) {
@@ -3316,6 +3320,8 @@ final class NodeScopeResolver
 			$impurePoints = [];
 			$isAlwaysTerminating = false;
 			foreach ($expr->parts as $part) {
+				$nodeCallback(new ExprUsedAsStringNode($part));
+
 				if (!$part instanceof Expr) {
 					continue;
 				}
@@ -3477,6 +3483,7 @@ final class NodeScopeResolver
 			$hasYield = $result->hasYield();
 
 			$scope = $result->getScope();
+			$nodeCallback(new ExprUsedAsStringNode($expr->expr));
 		} elseif ($expr instanceof Cast\String_) {
 			$result = $this->processExprNode($stmt, $expr->expr, $scope, $nodeCallback, $context->enterDeep());
 			$throwPoints = $result->getThrowPoints();
@@ -3499,6 +3506,7 @@ final class NodeScopeResolver
 			}
 
 			$scope = $result->getScope();
+			$nodeCallback(new ExprUsedAsStringNode($expr->expr));
 		} elseif (
 			$expr instanceof Expr\BitwiseNot
 			|| $expr instanceof Cast
@@ -4158,6 +4166,10 @@ final class NodeScopeResolver
 			$throwPoints = [];
 			$impurePoints = [];
 			$isAlwaysTerminating = false;
+
+			if ($expr instanceof Node\Scalar\String_) {
+				$nodeCallback(new ExprUsedAsStringNode($expr));
+			}
 		} elseif ($expr instanceof ConstFetch) {
 			$hasYield = false;
 			$throwPoints = [];
