@@ -11,6 +11,8 @@ use PHPStan\Node\MethodReturnStatementsNode;
 use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\Constant\ConstantBooleanType;
+use PHPStan\Type\GeneralizePrecision;
+use PHPStan\Type\SimultaneousTypeTraverser;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\TypehintHelper;
@@ -145,6 +147,54 @@ final class TooWideTypeCheck
 			return [];
 		}
 
+		if (
+			$this->reportTooWideBool
+			&& $scope->getPhpVersion()->supportsTrueAndFalseStandaloneType()->yes()
+		) {
+			$simultaneousType = SimultaneousTypeTraverser::map($functionReturnType, $returnType, function(Type $left, Type $right, callable $traverse): Type {
+				if (
+					$right instanceof UnionType
+					&& $left instanceof UnionType
+				) {
+					if ($right->isConstantScalarValue()->yes()) {
+						$right = $right->generalize(GeneralizePrecision::lessSpecific());
+					}
+					if ($left->isConstantScalarValue()->yes()) {
+						$left = $left->generalize(GeneralizePrecision::lessSpecific());
+					}
+
+					$combined = TypeCombinator::intersect($left, $right);
+					return $traverse($combined, $combined);
+				}
+
+				if (
+					!$right->isTrue()->yes()
+					&& !$right->isFalse()->yes()
+				) {
+					return $traverse($left, $right);
+				}
+
+				if (
+					$left->isBoolean()->yes()
+				) {
+					return $traverse($right, $right);
+				}
+
+				return $traverse($left, $right);
+			});
+
+			if (!$simultaneousType->equals($functionReturnType)) {
+				$messages[] = RuleErrorBuilder::message(sprintf(
+					'%s never returns %s so the return type can be changed to %s.',
+					$functionDescription,
+					$functionReturnType->describe(VerbosityLevel::getRecommendedLevelByType($functionReturnType)),
+					$simultaneousType->describe(VerbosityLevel::getRecommendedLevelByType($simultaneousType)),
+				))->identifier('return.tooWideBool')->build();
+
+				return $messages;
+			}
+		}
+
 		$messages = [];
 		$functionReturnTypes = $functionReturnType instanceof UnionType ? $functionReturnType->getTypes() : $functionReturnType->getFiniteTypes();
 		foreach ($functionReturnTypes as $type) {
@@ -248,6 +298,10 @@ final class TooWideTypeCheck
 			) {
 				return $combinedType;
 			}
+		}
+
+		if ($nativeType->isArray()->yes()) {
+			return $combinedType;
 		}
 
 		return null;
