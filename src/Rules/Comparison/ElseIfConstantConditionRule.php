@@ -9,7 +9,6 @@ use PHPStan\DependencyInjection\RegisteredRule;
 use PHPStan\Parser\LastConditionVisitor;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
-use PHPStan\Type\Constant\ConstantBooleanType;
 use function sprintf;
 
 /**
@@ -42,14 +41,14 @@ final class ElseIfConstantConditionRule implements Rule
 	): array
 	{
 		$exprType = $this->helper->getBooleanType($scope, $node->cond);
-		if ($exprType instanceof ConstantBooleanType) {
+		if ($exprType->isTrue()->yes() || $exprType->isFalse()->yes()) {
 			$addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
 				if (!$this->treatPhpDocTypesAsCertain) {
 					return $ruleErrorBuilder;
 				}
 
 				$booleanNativeType = $this->helper->getNativeBooleanType($scope, $node->cond);
-				if ($booleanNativeType instanceof ConstantBooleanType) {
+				if ($booleanNativeType->isTrue()->yes() || $booleanNativeType->isFalse()->yes()) {
 					return $ruleErrorBuilder;
 				}
 				if (!$this->treatPhpDocTypesAsCertainTip) {

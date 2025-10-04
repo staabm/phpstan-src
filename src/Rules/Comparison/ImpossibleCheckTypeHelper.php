@@ -19,7 +19,6 @@ use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\ShouldNotHappenException;
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\Constant\ConstantArrayType;
-use PHPStan\Type\Constant\ConstantBooleanType;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\Generic\GenericClassStringType;
 use PHPStan\Type\IntersectionType;
@@ -270,7 +269,7 @@ final class ImpossibleCheckTypeHelper
 			}
 
 			$rootExprType = ($this->treatPhpDocTypesAsCertain ? $scope->getType($rootExpr) : $scope->getNativeType($rootExpr));
-			if ($rootExprType instanceof ConstantBooleanType) {
+			if ($rootExprType->isTrue()->yes() || $rootExprType->isFalse()->yes()) {
 				return $rootExprType->getValue();
 			}
 

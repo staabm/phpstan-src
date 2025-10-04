@@ -9,7 +9,6 @@ use PHPStan\DependencyInjection\AutowiredParameter;
 use PHPStan\DependencyInjection\RegisteredRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
-use PHPStan\Type\Constant\ConstantBooleanType;
 
 /**
  * @implements Rule<While_>
@@ -46,7 +45,7 @@ final class WhileLoopAlwaysFalseConditionRule implements Rule
 				}
 
 				$booleanNativeType = $this->helper->getNativeBooleanType($scope, $node->cond);
-				if ($booleanNativeType instanceof ConstantBooleanType) {
+				if ($booleanNativeType->isTrue()->yes() || $booleanNativeType->isFalse()->yes()) {
 					return $ruleErrorBuilder;
 				}
 				if (!$this->treatPhpDocTypesAsCertainTip) {

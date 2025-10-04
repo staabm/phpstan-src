@@ -10,7 +10,6 @@ use PHPStan\DependencyInjection\RegisteredRule;
 use PHPStan\Parser\LastConditionVisitor;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
-use PHPStan\Type\Constant\ConstantBooleanType;
 use function sprintf;
 
 /**
@@ -41,14 +40,14 @@ final class LogicalXorConstantConditionRule implements Rule
 	{
 		$errors = [];
 		$leftType = $this->helper->getBooleanType($scope, $node->left);
-		if ($leftType instanceof ConstantBooleanType) {
+		if ($leftType->isTrue()->yes() || $leftType->isFalse()->yes()) {
 			$addTipLeft = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
 				if (!$this->treatPhpDocTypesAsCertain) {
 					return $ruleErrorBuilder;
 				}
 
 				$booleanNativeType = $this->helper->getNativeBooleanType($scope, $node->left);
-				if ($booleanNativeType instanceof ConstantBooleanType) {
+				if ($booleanNativeType->isTrue()->yes() || $booleanNativeType->isFalse()->yes()) {
 					return $ruleErrorBuilder;
 				}
 				if (!$this->treatPhpDocTypesAsCertainTip) {
@@ -74,7 +73,7 @@ final class LogicalXorConstantConditionRule implements Rule
 		}
 
 		$rightType = $this->helper->getBooleanType($scope, $node->right);
-		if ($rightType instanceof ConstantBooleanType) {
+		if ($rightType->isTrue()->yes() || $rightType->isFalse()->yes()) {
 			$addTipRight = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
 				if (!$this->treatPhpDocTypesAsCertain) {
 					return $ruleErrorBuilder;
@@ -84,7 +83,7 @@ final class LogicalXorConstantConditionRule implements Rule
 					$scope,
 					$node->right,
 				);
-				if ($booleanNativeType instanceof ConstantBooleanType) {
+				if ($booleanNativeType->isTrue()->yes() || $booleanNativeType->isFalse()->yes()) {
 					return $ruleErrorBuilder;
 				}
 				if (!$this->treatPhpDocTypesAsCertainTip) {

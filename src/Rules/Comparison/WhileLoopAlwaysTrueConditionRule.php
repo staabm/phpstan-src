@@ -12,7 +12,6 @@ use PHPStan\DependencyInjection\RegisteredRule;
 use PHPStan\Node\BreaklessWhileLoopNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
-use PHPStan\Type\Constant\ConstantBooleanType;
 
 /**
  * @implements Rule<BreaklessWhileLoopNode>
@@ -73,7 +72,7 @@ final class WhileLoopAlwaysTrueConditionRule implements Rule
 				}
 
 				$booleanNativeType = $this->helper->getNativeBooleanType($scope, $originalNode->cond);
-				if ($booleanNativeType instanceof ConstantBooleanType) {
+				if ($booleanNativeType->isTrue()->yes() || $booleanNativeType->isFalse()->yes()) {
 					return $ruleErrorBuilder;
 				}
 				if (!$this->treatPhpDocTypesAsCertainTip) {

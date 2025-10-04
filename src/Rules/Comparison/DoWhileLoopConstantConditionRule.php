@@ -12,7 +12,6 @@ use PHPStan\DependencyInjection\RegisteredRule;
 use PHPStan\Node\DoWhileLoopConditionNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
-use PHPStan\Type\Constant\ConstantBooleanType;
 use function sprintf;
 
 /**
@@ -40,7 +39,7 @@ final class DoWhileLoopConstantConditionRule implements Rule
 	public function processNode(Node $node, Scope $scope): array
 	{
 		$exprType = $this->helper->getBooleanType($scope, $node->getCond());
-		if ($exprType instanceof ConstantBooleanType) {
+		if ($exprType->isTrue()->yes() || $exprType->isFalse()->yes()) {
 			if ($exprType->getValue()) {
 				foreach ($node->getExitPoints() as $exitPoint) {
 					$statement = $exitPoint->getStatement();
@@ -73,7 +72,7 @@ final class DoWhileLoopConstantConditionRule implements Rule
 				}
 
 				$booleanNativeType = $this->helper->getNativeBooleanType($scope, $node->getCond());
-				if ($booleanNativeType instanceof ConstantBooleanType) {
+				if ($booleanNativeType->isTrue()->yes() || $booleanNativeType->isFalse()->yes()) {
 					return $ruleErrorBuilder;
 				}
 				if (!$this->treatPhpDocTypesAsCertainTip) {

@@ -10,7 +10,6 @@ use PHPStan\DependencyInjection\RegisteredRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\ShouldNotHappenException;
-use PHPStan\Type\Constant\ConstantBooleanType;
 use PHPStan\Type\VerbosityLevel;
 use function get_class;
 use function sprintf;
@@ -51,14 +50,14 @@ final class NumberComparisonOperatorsConstantConditionRule implements Rule
 		}
 
 		$exprType = $this->treatPhpDocTypesAsCertain ? $scope->getType($node) : $scope->getNativeType($node);
-		if ($exprType instanceof ConstantBooleanType) {
+		if ($exprType->isTrue()->yes() || $exprType->isFalse()->yes()) {
 			$addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
 				if (!$this->treatPhpDocTypesAsCertain) {
 					return $ruleErrorBuilder;
 				}
 
 				$booleanNativeType = $scope->getNativeType($node);
-				if ($booleanNativeType instanceof ConstantBooleanType) {
+				if ($booleanNativeType->isTrue()->yes() || $booleanNativeType->isFalse()->yes()) {
 					return $ruleErrorBuilder;
 				}
 				if (!$this->treatPhpDocTypesAsCertainTip) {

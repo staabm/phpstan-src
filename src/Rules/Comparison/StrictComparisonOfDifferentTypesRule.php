@@ -13,7 +13,6 @@ use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\ShouldNotHappenException;
 use PHPStan\TrinaryLogic;
-use PHPStan\Type\Constant\ConstantBooleanType;
 use PHPStan\Type\VerbosityLevel;
 use function count;
 use function sprintf;
@@ -57,7 +56,7 @@ final class StrictComparisonOfDifferentTypesRule implements Rule
 		}
 
 		$nodeType = $nodeTypeResult->type;
-		if (!$nodeType instanceof ConstantBooleanType) {
+		if (!$nodeType->isTrue()->yes() && !$nodeType->isFalse()->yes()) {
 			return [];
 		}
 
@@ -75,7 +74,7 @@ final class StrictComparisonOfDifferentTypesRule implements Rule
 			}
 
 			$instanceofTypeWithoutPhpDocs = $scope->getNativeType($node);
-			if ($instanceofTypeWithoutPhpDocs instanceof ConstantBooleanType) {
+			if ($instanceofTypeWithoutPhpDocs->isTrue()->yes() || $instanceofTypeWithoutPhpDocs->isFalse()->yes()) {
 				return $ruleErrorBuilder;
 			}
 			if (!$this->treatPhpDocTypesAsCertainTip) {

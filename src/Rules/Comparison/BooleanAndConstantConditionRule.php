@@ -10,7 +10,6 @@ use PHPStan\Node\BooleanAndNode;
 use PHPStan\Parser\LastConditionVisitor;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
-use PHPStan\Type\Constant\ConstantBooleanType;
 use function count;
 use function sprintf;
 
@@ -48,14 +47,14 @@ final class BooleanAndConstantConditionRule implements Rule
 		$nodeText = $originalNode->getOperatorSigil();
 		$leftType = $this->helper->getBooleanType($scope, $originalNode->left);
 		$identifierType = $originalNode instanceof Node\Expr\BinaryOp\BooleanAnd ? 'booleanAnd' : 'logicalAnd';
-		if ($leftType instanceof ConstantBooleanType) {
+		if ($leftType->isTrue()->yes() || $leftType->isFalse()->yes()) {
 			$addTipLeft = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $originalNode): RuleErrorBuilder {
 				if (!$this->treatPhpDocTypesAsCertain) {
 					return $ruleErrorBuilder;
 				}
 
 				$booleanNativeType = $this->helper->getNativeBooleanType($scope, $originalNode->left);
-				if ($booleanNativeType instanceof ConstantBooleanType) {
+				if ($booleanNativeType->isTrue()->yes() || $booleanNativeType->isFalse()->yes()) {
 					return $ruleErrorBuilder;
 				}
 				if (!$this->treatPhpDocTypesAsCertainTip) {
@@ -86,7 +85,7 @@ final class BooleanAndConstantConditionRule implements Rule
 			$rightScope,
 			$originalNode->right,
 		);
-		if ($rightType instanceof ConstantBooleanType && !$scope->isInFirstLevelStatement()) {
+		if (($rightType->isTrue()->yes() || $rightType->isFalse()->yes()) && !$scope->isInFirstLevelStatement()) {
 			$addTipRight = function (RuleErrorBuilder $ruleErrorBuilder) use ($rightScope, $originalNode): RuleErrorBuilder {
 				if (!$this->treatPhpDocTypesAsCertain) {
 					return $ruleErrorBuilder;
@@ -96,7 +95,7 @@ final class BooleanAndConstantConditionRule implements Rule
 					$rightScope,
 					$originalNode->right,
 				);
-				if ($booleanNativeType instanceof ConstantBooleanType) {
+				if ($booleanNativeType->isTrue()->yes() || $booleanNativeType->isFalse()->yes()) {
 					return $ruleErrorBuilder;
 				}
 				if (!$this->treatPhpDocTypesAsCertainTip) {
@@ -124,14 +123,14 @@ final class BooleanAndConstantConditionRule implements Rule
 
 		if (count($errors) === 0 && !$scope->isInFirstLevelStatement()) {
 			$nodeType = $this->treatPhpDocTypesAsCertain ? $scope->getType($originalNode) : $scope->getNativeType($originalNode);
-			if ($nodeType instanceof ConstantBooleanType) {
+			if ($nodeType->isTrue()->yes() || $nodeType->isFalse()->yes()) {
 				$addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $originalNode): RuleErrorBuilder {
 					if (!$this->treatPhpDocTypesAsCertain) {
 						return $ruleErrorBuilder;
 					}
 
 					$booleanNativeType = $scope->getNativeType($originalNode);
-					if ($booleanNativeType instanceof ConstantBooleanType) {
+					if ($booleanNativeType->isTrue()->yes() || $booleanNativeType->isFalse()->yes()) {
 						return $ruleErrorBuilder;
 					}
 					if (!$this->treatPhpDocTypesAsCertainTip) {
