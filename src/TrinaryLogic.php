@@ -12,69 +12,69 @@ use function min;
  * @api
  * @see https://phpstan.org/developing-extensions/trinary-logic
  */
-final class TrinaryLogic
+enum TrinaryLogic: int
 {
+	case YES = 1;
+	case MAYBE = 0;
+	case NO = -1;
 
-	private const YES = 1;
-	private const MAYBE = 0;
-	private const NO = -1;
-
-	/** @var self[] */
-	private static array $registry = [];
-
-	private function __construct(private int $value)
-	{
-	}
 
 	public static function createYes(): self
 	{
-		return self::$registry[self::YES] ??= new self(self::YES);
+		return self::YES;
 	}
 
 	public static function createNo(): self
 	{
-		return self::$registry[self::NO] ??= new self(self::NO);
+		return self::NO;
 	}
 
 	public static function createMaybe(): self
 	{
-		return self::$registry[self::MAYBE] ??= new self(self::MAYBE);
+		return self::MAYBE;
 	}
 
 	public static function createFromBoolean(bool $value): self
 	{
-		$yesNo = $value ? self::YES : self::NO;
-		return self::$registry[$yesNo] ??= new self($yesNo);
+		return $value ? self::YES : self::NO;
 	}
 
 	private static function create(int $value): self
 	{
-		self::$registry[$value] ??= new self($value);
-		return self::$registry[$value];
+		if ($value === 0) {
+			return self::MAYBE;
+		}
+		if ($value === 1) {
+			return self::YES;
+		}
+		if ($value === -1) {
+			return self::NO;
+		}
+		throw new ShouldNotHappenException();
 	}
 
 	public function yes(): bool
 	{
-		return $this->value === self::YES;
+		return $this === self::YES;
 	}
 
 	public function maybe(): bool
 	{
-		return $this->value === self::MAYBE;
+		return $this === self::MAYBE;
 	}
 
 	public function no(): bool
 	{
-		return $this->value === self::NO;
+		return $this === self::NO;
 	}
 
 	public function toBooleanType(): BooleanType
 	{
-		if ($this->value === self::MAYBE) {
+		if ($this === self::MAYBE) {
 			return new BooleanType();
 		}
 
-		return new ConstantBooleanType($this->value === self::YES);
+		return new ConstantBooleanType($this === self::YES);
 	}
 
 	public function and(self ...$operands): self
@@ -159,7 +159,7 @@ final class TrinaryLogic
 		$operandValues = array_column($operands, 'value');
 		$min = min($operandValues);
 		$max = max($operandValues);
-		return self::create($min === $max ? $min : self::MAYBE);
+		return self::create($min === $max ? $min : self::MAYBE->value);
 	}
 
 	/**
@@ -248,13 +248,16 @@ final class TrinaryLogic
 
 	public function describe(): string
 	{
-		static $labels = [
-			self::NO => 'No',
-			self::MAYBE => 'Maybe',
-			self::YES => 'Yes',
-		];
-
-		return $labels[$this->value];
+		if ($this === self::MAYBE) {
+			return 'Maybe';
+		}
+		if ($this === self::YES) {
+			return 'Yes';
+		}
+		if ($this === self::NO) {
+			return 'No';
+		}
+		throw new ShouldNotHappenException();
 	}
 
 }
