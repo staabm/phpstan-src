@@ -1024,7 +1024,7 @@ class NodeScopeResolver
 			}
 
 			$classStatementsGatherer = new ClassStatementsGatherer($classReflection, $nodeCallback);
-			$this->processAttributeGroups($stmt, $stmt->attrGroups, $classScope, $storage, $classStatementsGatherer);
+			$this->processAttributeGroups($stmt, $stmt->attrGroups, $classScope, $storage, [$classStatementsGatherer, 'nodeCallback']);
 
 			$classLikeStatements = $stmt->stmts;
 			if ($this->narrowMethodScopeFromConstructor) {
@@ -1045,7 +1045,7 @@ class NodeScopeResolver
 				});
 			}
 
-			$this->processStmtNodesInternal($stmt, $classLikeStatements, $classScope, $storage, $classStatementsGatherer, $context);
+			$this->processStmtNodesInternal($stmt, $classLikeStatements, $classScope, $storage, [$classStatementsGatherer, 'nodeCallback'], $context);
 			$this->callNodeCallback($nodeCallback, new ClassPropertiesNode($stmt, $this->readWritePropertiesExtensionProvider, $classStatementsGatherer->getProperties(), $classStatementsGatherer->getPropertyUsages(), $classStatementsGatherer->getMethodCalls(), $classStatementsGatherer->getReturnStatementsNodes(), $classStatementsGatherer->getPropertyAssigns(), $classReflection), $classScope, $storage);
 			$this->callNodeCallback($nodeCallback, new ClassMethodsNode($stmt, $classStatementsGatherer->getMethods(), $classStatementsGatherer->getMethodCalls(), $classReflection), $classScope, $storage);
 			$this->callNodeCallback($nodeCallback, new ClassConstantsNode($stmt, $classStatementsGatherer->getConstants(), $classStatementsGatherer->getConstantFetches(), $classReflection), $classScope, $storage);

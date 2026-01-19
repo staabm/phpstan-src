@@ -134,7 +134,7 @@ final class ClassStatementsGatherer
 		return $this->propertyAssigns;
 	}
 
-	public function __invoke(Node $node, Scope $scope): void
+	public function nodeCallback(Node $node, Scope $scope): void
 	{
 		$nodeCallback = $this->nodeCallback;
 		$nodeCallback($node, $scope);
