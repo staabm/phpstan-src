@@ -4283,10 +4283,15 @@ class MutatingScope implements Scope, NodeCallbackInvoker
 				continue;
 			}
 
+			$newCertainty = $variableTypeHolder->getCertainty()->and($expressionTypes[$variableExprString]->getCertainty());
+			if ($newCertainty->yes()) {
+				$expressionTypes[$variableExprString] = $variableTypeHolder;
+				continue;
+			}
 			$expressionTypes[$variableExprString] = new ExpressionTypeHolder(
 				$variableTypeHolder->getExpr(),
 				$variableTypeHolder->getType(),
-				$variableTypeHolder->getCertainty()->and($expressionTypes[$variableExprString]->getCertainty()),
+				$newCertainty,
 			);
 		}
 		$nativeTypes = $this->nativeExpressionTypes;
@@ -4296,10 +4301,15 @@ class MutatingScope implements Scope, NodeCallbackInvoker
 				continue;
 			}
 
+			$newCertainty = $variableTypeHolder->getCertainty()->and($nativeTypes[$variableExprString]->getCertainty());
+			if ($newCertainty->yes()) {
+				$nativeTypes[$variableExprString] = $variableTypeHolder;
+				continue;
+			}
 			$nativeTypes[$variableExprString] = new ExpressionTypeHolder(
 				$variableTypeHolder->getExpr(),
 				$variableTypeHolder->getType(),
-				$variableTypeHolder->getCertainty()->and($nativeTypes[$variableExprString]->getCertainty()),
+				$newCertainty,
 			);
 		}
 
