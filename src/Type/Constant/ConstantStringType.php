@@ -195,40 +195,52 @@ class ConstantStringType extends StringType implements ConstantScalarType
 			return TrinaryLogic::createNo();
 		}
 
-		$reflectionProvider = ReflectionProviderStaticAccessor::getInstance();
-
 		// 'my_function'
-		if ($reflectionProvider->hasFunction(new Name($this->value), null)) {
-			return TrinaryLogic::createYes();
-		}
-
+		// or
+		// '\my_function'
+		// or
+		// 'CallUserFunc\generic'
+		// or
 		// 'MyClass::myStaticFunction'
-		$matches = Strings::match($this->value, '#^([a-zA-Z_\\x7f-\\xff\\\\][a-zA-Z0-9_\\x7f-\\xff\\\\]*)::([a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*)\z#');
+		$matches = Strings::match($this->value, '#(?:^([a-zA-Z_\\x7f-\\xff\\\\][a-zA-Z0-9_\\x7f-\\xff\\\\]*)(::|\\\)|^(?:\\\)?)([a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*)\z#');
 		if ($matches !== null) {
-			if (!$reflectionProvider->hasClass($matches[1])) {
-				return TrinaryLogic::createMaybe();
-			}
-
-			$classRef = $reflectionProvider->getClass($matches[1]);
-			if ($classRef->hasMethod($matches[2])) {
-				$phpVersion = PhpVersionStaticAccessor::getInstance();
-				if (!$phpVersion->supportsCallableInstanceMethods()) {
-					$method = $classRef->getMethod($matches[2], new OutOfClassScope());
-
-					if (!$method->isStatic()) {
-						return TrinaryLogic::createNo();
-					}
+			$reflectionProvider = ReflectionProviderStaticAccessor::getInstance();
+			$class = $matches[1];
+			$separator = $matches[2];
+			$functionOrMethod = $matches[3];
+			if ($class === '' || $separator === '\\') {
+				if ($reflectionProvider->hasFunction(new Name($this->value), null)) {
+					return TrinaryLogic::createYes();
+				}
+			} else {
+				if (!$reflectionProvider->hasClass($class)) {
+					return TrinaryLogic::createMaybe();
 				}
 
-				return TrinaryLogic::createYes();
+				$classRef = $reflectionProvider->getClass($class);
+				if ($classRef->hasMethod($functionOrMethod)) {
+					$phpVersion = PhpVersionStaticAccessor::getInstance();
+					if (!$phpVersion->supportsCallableInstanceMethods()) {
+						$method = $classRef->getMethod($functionOrMethod, new OutOfClassScope());
+
+						if (!$method->isStatic()) {
+							return TrinaryLogic::createNo();
+						}
+					}
+
+					return TrinaryLogic::createYes();
+				}
+
+				if (!$classRef->isFinalByKeyword()) {
+					return TrinaryLogic::createMaybe();
+				}
+
+				return TrinaryLogic::createNo();
 			}
 
-			if (!$classRef->isFinalByKeyword()) {
-				return TrinaryLogic::createMaybe();
-			}
-
-			return TrinaryLogic::createNo();
 		}
+
+
 
 		return TrinaryLogic::createNo();
 	}
