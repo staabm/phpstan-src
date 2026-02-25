@@ -45,6 +45,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\VerbosityLevel;
 use function addcslashes;
+use function array_key_exists;
 use function in_array;
 use function is_float;
 use function is_int;
@@ -189,24 +190,31 @@ class ConstantStringType extends StringType implements ConstantScalarType
 		return IsSuperTypeOfResult::createNo();
 	}
 
+	/** @var array<string, TrinaryLogic> */
+	private static array $stringIsCallable = [];
+
 	public function isCallable(): TrinaryLogic
 	{
 		if ($this->value === '') {
 			return TrinaryLogic::createNo();
 		}
 
+		if (array_key_exists($this->value, self::$stringIsCallable)) {
+			return self::$stringIsCallable[$this->value];
+		}
+
 		$reflectionProvider = ReflectionProviderStaticAccessor::getInstance();
 
 		// 'my_function'
 		if ($reflectionProvider->hasFunction(new Name($this->value), null)) {
-			return TrinaryLogic::createYes();
+			return self::$stringIsCallable[$this->value] = TrinaryLogic::createYes();
 		}
 
 		// 'MyClass::myStaticFunction'
 		$matches = Strings::match($this->value, '#^([a-zA-Z_\\x7f-\\xff\\\\][a-zA-Z0-9_\\x7f-\\xff\\\\]*)::([a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*)\z#');
 		if ($matches !== null) {
 			if (!$reflectionProvider->hasClass($matches[1])) {
-				return TrinaryLogic::createMaybe();
+				return self::$stringIsCallable[$this->value] = TrinaryLogic::createMaybe();
 			}
 
 			$classRef = $reflectionProvider->getClass($matches[1]);
@@ -216,21 +224,21 @@ class ConstantStringType extends StringType implements ConstantScalarType
 					$method = $classRef->getMethod($matches[2], new OutOfClassScope());
 
 					if (!$method->isStatic()) {
-						return TrinaryLogic::createNo();
+						return self::$stringIsCallable[$this->value] = TrinaryLogic::createNo();
 					}
 				}
 
-				return TrinaryLogic::createYes();
+				return self::$stringIsCallable[$this->value] = TrinaryLogic::createYes();
 			}
 
 			if (!$classRef->isFinalByKeyword()) {
-				return TrinaryLogic::createMaybe();
+				return self::$stringIsCallable[$this->value] = TrinaryLogic::createMaybe();
 			}
 
-			return TrinaryLogic::createNo();
+			return self::$stringIsCallable[$this->value] = TrinaryLogic::createNo();
 		}
 
-		return TrinaryLogic::createNo();
+		return self::$stringIsCallable[$this->value] = TrinaryLogic::createNo();
 	}
 
 	public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
