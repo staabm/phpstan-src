@@ -1,5 +1,7 @@
 <?php
 
+// see https://cli.github.com/manual/gh_pr_list
+
 require_once 'report-classes.php';
 
 $author = 'staabm';
