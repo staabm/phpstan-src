@@ -124,6 +124,9 @@ class PullRequestUrlParser {
 
 
 function formatAuthor(string $author): string {
+	if ($author === '') { // bot created, credits to the team
+		return '**Markus Staab, Vincent Langlet**';
+	}
 	if ($author === 'Markus Staab') {
 		return '**Markus Staab**';
 	}
