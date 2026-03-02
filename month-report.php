@@ -7,10 +7,10 @@ require_once 'report-classes.php';
 $author = 'staabm';
 $authorHandle = '@staabm';
 $fullName = 'Markus Staab';
-echo "Month: February\n";
+$dateRange = '2026-02-01..2026-02-28';
 
-// gh pr list --repo phpstan/phpstan-src --state merged --limit 50 --json number,title,author,createdAt,reviews,url,body --search 'sort:updated-desc is:pr author:staabm created:2026-02-01..2026-02-28' > staabm-prs-feb.json
-$json = file_get_contents('staabm-prs-feb.json');
+exec("gh pr list --state merged --limit 500 --json number,title,author,createdAt,reviews,url,body --search 'sort:updated-desc is:pr user:phpstan author:$author created:$dateRange'", $output);
+$json = implode("", $output);
 $result = json_decode($json, true);
 
 printf("## %s Pull requests authored by %s\n", count($result), $fullName);
@@ -23,9 +23,9 @@ foreach($result as $pr) {
 	}
 }
 
-
-// gh pr list --repo phpstan/phpstan-src --state merged --limit 500 --json number,title,author,createdAt,reviews,url,body --search 'sort:updated-desc is:pr reviewed-by:staabm -author:staabm merged:2026-02-01..2026-02-28' > staabm-reviewed-prs-feb.json
-$json = file_get_contents('staabm-reviewed-prs-feb.json');
+unset($output);
+exec("gh pr list --state merged --limit 500 --json number,title,author,createdAt,reviews,url,body --search 'sort:updated-desc is:pr user:phpstan reviewed-by:$author -author:$author merged:$dateRange'", $output);
+$json = implode("", $output);
 $result = json_decode($json, true);
 
 printf("## %s Pull requests reviewed by %s\n", count($result), $fullName);
