@@ -77,7 +77,7 @@ readonly class IssueReference
 
 	public function getUrl(): string
 	{
-		return 'https://github.com/' . $this->issueRef;
+		return sprintf('https://github.com/%s/%s/issues/%s', $this->getRepoOwner(), $this->getRepoName(), $this->getNumber());
 	}
 
 	public function getRepoOwner(): string {
