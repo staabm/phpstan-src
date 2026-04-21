@@ -2364,14 +2364,7 @@ final class TypeSpecifier
 			$expr instanceof MethodCall
 			&& $expr->name instanceof Node\Identifier
 		) {
-			$methodName = $expr->name->toString();
-			$calledOnType = $scope->getType($expr->var);
-			$methodReflection = $scope->getMethodReflection($calledOnType, $methodName);
-			if (
-				$methodReflection === null
-				|| $methodReflection->hasSideEffects()->yes()
-				|| (!$this->rememberPossiblyImpureFunctionValues && !$methodReflection->hasSideEffects()->no())
-			) {
+			if (!$this->shouldRememberCall($expr, $scope)) {
 				if (isset($containsNull) && !$containsNull) {
 					return $this->createNullsafeTypes($originalExpr, $scope, $context, $type);
 				}
@@ -2384,19 +2377,7 @@ final class TypeSpecifier
 			$expr instanceof StaticCall
 			&& $expr->name instanceof Node\Identifier
 		) {
-			$methodName = $expr->name->toString();
-			if ($expr->class instanceof Name) {
-				$calledOnType = $scope->resolveTypeByName($expr->class);
-			} else {
-				$calledOnType = $scope->getType($expr->class);
-			}
-
-			$methodReflection = $scope->getMethodReflection($calledOnType, $methodName);
-			if (
-				$methodReflection === null
-				|| $methodReflection->hasSideEffects()->yes()
-				|| (!$this->rememberPossiblyImpureFunctionValues && !$methodReflection->hasSideEffects()->no())
-			) {
+			if (!$this->shouldRememberCall($expr, $scope)) {
 				if (isset($containsNull) && !$containsNull) {
 					return $this->createNullsafeTypes($originalExpr, $scope, $context, $type);
 				}
@@ -2431,6 +2412,84 @@ final class TypeSpecifier
 		}
 
 		return $types;
+	}
+
+	private function shouldRememberCall(Expr $expr, Scope $scope): bool
+	{
+		if (
+			$expr instanceof Expr\New_
+			&& $expr->class instanceof Name
+			&& $this->reflectionProvider->hasClass($expr->class->toString())
+		) {
+			$classReflection = $this->reflectionProvider->getClass($expr->class->toString());
+
+			if ($classReflection->hasConstructor()) {
+				$methodReflection = $classReflection->getConstructor();
+
+				if (
+					$methodReflection->hasSideEffects()->yes()
+					|| (!$this->rememberPossiblyImpureFunctionValues && !$methodReflection->hasSideEffects()->no())
+				) {
+					return false;
+				}
+			}
+		}
+
+		if (
+			$expr instanceof MethodCall
+			&& $expr->name instanceof Node\Identifier
+		) {
+			$methodName = $expr->name->toString();
+			$calledOnType = $scope->getType($expr->var);
+			$methodReflection = $scope->getMethodReflection($calledOnType, $methodName);
+			if (
+				$methodReflection === null
+				|| $expr->var instanceof Expr\New_
+				|| $methodReflection->hasSideEffects()->yes()
+				|| (!$this->rememberPossiblyImpureFunctionValues && !$methodReflection->hasSideEffects()->no())
+			) {
+				return false;
+			}
+		}
+
+		if (
+			$expr instanceof StaticCall
+			&& $expr->name instanceof Node\Identifier
+		) {
+			$methodName = $expr->name->toString();
+			if ($expr->class instanceof Name) {
+				$calledOnType = $scope->resolveTypeByName($expr->class);
+			} else {
+				$calledOnType = $scope->getType($expr->class);
+			}
+
+			$methodReflection = $scope->getMethodReflection($calledOnType, $methodName);
+			if (
+				$methodReflection === null
+				|| $methodReflection->hasSideEffects()->yes()
+				|| (!$this->rememberPossiblyImpureFunctionValues && !$methodReflection->hasSideEffects()->no())
+			) {
+				return false;
+			}
+		}
+
+		if (
+			$expr instanceof MethodCall ||
+			$expr instanceof Expr\NullsafeMethodCall ||
+			$expr instanceof Expr\ArrayDimFetch ||
+			$expr instanceof PropertyFetch ||
+			$expr instanceof Expr\NullsafePropertyFetch
+		) {
+			return $this->shouldRememberCall($expr->var, $scope);
+		}
+		if (
+			$expr instanceof Expr\StaticCall
+			|| $expr instanceof Expr\StaticPropertyFetch
+		) {
+			return $expr->class instanceof Expr && $this->shouldRememberCall($expr->class, $scope);
+		}
+
+		return true;
 	}
 
 	private function createNullsafeTypes(Expr $expr, Scope $scope, TypeSpecifierContext $context, ?Type $type): SpecifiedTypes
