@@ -783,14 +783,18 @@ class IntersectionType implements CompoundType
 
 	public function isIterableAtLeastOnce(): TrinaryLogic
 	{
-		if ($this->isCallable()->yes() && $this->isArray()->yes()) {
-			return TrinaryLogic::createYes();
+		if ($this->isIterableAtLeastOnce === null) {
+			if ($this->isCallable()->yes() && $this->isArray()->yes()) {
+				$this->isIterableAtLeastOnce = TrinaryLogic::createYes();
+			} else {
+				$this->isIterableAtLeastOnce = $this->intersectResults(
+					static fn (Type $type): TrinaryLogic => $type->isIterableAtLeastOnce(),
+					static fn (Type $type): bool => !$type->isIterable()->no(),
+				);
+			}
 		}
 
-		return $this->isIterableAtLeastOnce ??= $this->intersectResults(
-			static fn (Type $type): TrinaryLogic => $type->isIterableAtLeastOnce(),
-			static fn (Type $type): bool => !$type->isIterable()->no(),
-		);
+		return $this->isIterableAtLeastOnce;
 	}
 
 	public function getArraySize(): Type
@@ -871,10 +875,15 @@ class IntersectionType implements CompoundType
 
 	public function isConstantArray(): TrinaryLogic
 	{
-		if ($this->isCallable()->yes() && $this->isArray()->yes()) {
-			return TrinaryLogic::createYes();
+		if ($this->isConstantArray === null) {
+			if ($this->isCallable()->yes() && $this->isArray()->yes()) {
+				$this->isConstantArray = TrinaryLogic::createYes();
+			} else {
+				$this->isConstantArray = $this->intersectResults(static fn (Type $type): TrinaryLogic => $type->isConstantArray());
+			}
 		}
-		return $this->isConstantArray ??= $this->intersectResults(static fn (Type $type): TrinaryLogic => $type->isConstantArray());
+
+		return $this->isConstantArray;
 	}
 
 	public function isOversizedArray(): TrinaryLogic
@@ -884,11 +893,14 @@ class IntersectionType implements CompoundType
 
 	public function isList(): TrinaryLogic
 	{
-		if ($this->isCallable()->yes() && $this->isArray()->yes()) {
-			return TrinaryLogic::createYes();
+		if ($this->isList === null) {
+			if ($this->isCallable()->yes() && $this->isArray()->yes()) {
+				$this->isList = TrinaryLogic::createYes();
+			} else {
+				$this->isList = $this->intersectResults(static fn (Type $type): TrinaryLogic => $type->isList());
+			}
 		}
-
-		return $this->isList ??= $this->intersectResults(static fn (Type $type): TrinaryLogic => $type->isList());
+		return $this->isList;
 	}
 
 	public function isString(): TrinaryLogic
