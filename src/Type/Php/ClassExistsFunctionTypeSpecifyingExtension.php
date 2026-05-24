@@ -48,16 +48,22 @@ final class ClassExistsFunctionTypeSpecifyingExtension implements FunctionTypeSp
 	{
 		$args = $node->getArgs();
 		$argType = $scope->getType($args[0]->value);
-		if ($argType instanceof ConstantStringType) {
-			$funcCall = new FuncCall(new FullyQualified('class_exists'), [
-				new Arg(new String_(ltrim($argType->getValue(), '\\'))),
-			]);
-			return $this->typeSpecifier->create(
-				new AlwaysRememberedExpr($funcCall, new BooleanType(), new BooleanType()),
-				new ConstantBooleanType(true),
-				$context,
-				$scope,
-			);
+
+		$constantStrings = $argType->getConstantStrings();
+		if (count($constantStrings) > 0) {
+			$specifiedTypes = new SpecifiedTypes();
+			foreach($constantStrings as $constantString) {
+				$funcCall = new FuncCall(new FullyQualified('class_exists'), [
+					new Arg(new String_(ltrim($constantString->getValue(), '\\'))),
+				]);
+				$specifiedTypes = $specifiedTypes->unionWith($this->typeSpecifier->create(
+					new AlwaysRememberedExpr($funcCall, new BooleanType(), new BooleanType()),
+					new ConstantBooleanType(true),
+					$context,
+					$scope,
+				));
+			}
+			return $specifiedTypes;
 		}
 
 		$narrowedType = new ClassStringType();
