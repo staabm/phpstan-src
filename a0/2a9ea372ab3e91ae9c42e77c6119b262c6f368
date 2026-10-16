@@ -1,0 +1,14 @@
+src/Turbo/TurboExtensionEnabler.php
+  h_53f8f6db02589e 36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a02a9ea372ab3e91ae9c42e77c6119b262c6f368",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
