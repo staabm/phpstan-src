@@ -1,0 +1,21 @@
+turbo-ext/src/ForeachEmptyOrObjectNarrowingHelper.cpp
+  s_58178b5caf8753::t_b00146acbbe8de 325-326
+src/Analyser/ExprHandler/Helper/ForeachEmptyOrObjectNarrowingHelper.php
+  s_58178b5caf8753::t_e03188d2dd856a 107
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "536f37b71904e140a664b6bce260a617458574be",
+  "prompts": {},
+  "sessions": {
+    "s_58178b5caf8753": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1791966921755",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
