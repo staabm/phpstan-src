@@ -1,0 +1,35 @@
+src/Analyser/StmtHandler/ForeachHandler.php
+  s_9b82cb0610a776::t_0cbe8cab003ee3 613-629,632-633,635-640
+turbo-ext/src/MutatingScope.cpp
+  s_f4d44d004fe73c::t_388c420d6e32c4 2956-2957
+  s_f4d44d004fe73c::t_3097bf60a78d19 2958
+src/Analyser/MutatingScope.php
+  s_f4d44d004fe73c::t_388c420d6e32c4 1433-1436
+  s_f4d44d004fe73c::t_2982f4d01a51bb 1437
+turbo-ext/src/ForeachHandler.cpp
+  s_9b82cb0610a776::t_db5491a2c19e2b 1300,1303-1309
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6366ed72b15c15761412f74cf6e174bba85d92d4",
+  "prompts": {},
+  "sessions": {
+    "s_9b82cb0610a776": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "5058d829-883b-4286-b5a9-42eae5a29914",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    },
+    "s_f4d44d004fe73c": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "7884281d-0cf0-4e73-8fcb-d71e4a58a5e3",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
