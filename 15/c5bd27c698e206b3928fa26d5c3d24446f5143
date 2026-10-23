@@ -1,0 +1,15 @@
+tests/PHPStan/Rules/Functions/data/bug-11507.php
+  h_53f8f6db02589e 3
+  h_53f8f6db02589e 12,25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "15c5bd27c698e206b3928fa26d5c3d24446f5143",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
