@@ -1,0 +1,26 @@
+.github/workflows/e2e-tests.yml
+  h_53f8f6db02589e 1840-1841,1847-1848
+  s_58178b5caf8753::t_43e46dd33bacf3 1850
+  s_58178b5caf8753::t_c328a9e3a6a180 1843
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ab6cb8dd854d24c1337883b1f9028aa617523766",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  },
+  "sessions": {
+    "s_58178b5caf8753": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1791966921755",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
