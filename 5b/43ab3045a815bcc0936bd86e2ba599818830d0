@@ -1,0 +1,20 @@
+.github/workflows/e2e-tests.yml
+  s_5b99ddf7d10fed::t_fef025dd35168a 1839,1841-1845,1847-1850,2101
+  s_5b99ddf7d10fed::t_b29fcbe1b94989 1840,1846
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5b43ab3045a815bcc0936bd86e2ba599818830d0",
+  "prompts": {},
+  "sessions": {
+    "s_5b99ddf7d10fed": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "352268d6-dcb6-41bd-b145-22819d6e80c4",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
