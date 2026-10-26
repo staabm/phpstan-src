@@ -1,0 +1,31 @@
+tests/PHPStan/Rules/Functions/CallToNonExistentFunctionRuleTest.php
+  s_58178b5caf8753::t_abeb490ae90c32 295
+  h_53f8f6db02589e 288-292
+  s_58178b5caf8753::t_5e8c77185df274 283
+  s_58178b5caf8753::t_04917839645851 284,296-297
+  s_58178b5caf8753::t_d24496237f0867 298
+  h_53f8f6db02589e 285-287,293-294
+tests/PHPStan/Rules/Functions/data/bug-11359.php
+  h_53f8f6db02589e 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b9141cc0d43d23df8482c8e99a67dfdde06d0c31",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  },
+  "sessions": {
+    "s_58178b5caf8753": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1791966921755",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
