@@ -1,0 +1,14 @@
+.github/workflows/e2e-tests.yml
+  h_53f8f6db02589e 1848
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "cce554442e99c6f1456369ff03aa4e220ef21685",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
