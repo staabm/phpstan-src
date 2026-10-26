@@ -1,0 +1,14 @@
+tests/PHPStan/Rules/Functions/CallToNonExistentFunctionRuleTest.php
+  h_53f8f6db02589e 8,293
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d2c8bd2f42660f699dcbef60eb0531ecc1526adf",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
