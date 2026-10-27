@@ -1,0 +1,26 @@
+tests/PHPStan/Analyser/nsrt/bug-15537.php
+  s_58178b5caf8753::t_a3f6f917fede2a 23
+  s_58178b5caf8753::t_dd4b293008c840 22
+  h_53f8f6db02589e 15-18,24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "613f7e6b551cb5ee99cde05f91ccbc52908691ef",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  },
+  "sessions": {
+    "s_58178b5caf8753": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1791966921755",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
