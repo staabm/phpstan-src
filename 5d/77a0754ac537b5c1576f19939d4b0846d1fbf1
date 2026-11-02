@@ -1,0 +1,16 @@
+composer.lock
+  h_53f8f6db02589e 4151,4155,4159-4160,4197,4199-4200
+issue-bot/composer.lock
+  h_53f8f6db02589e 1647,1651,1655-1656,1693,1695-1696,5106
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5d77a0754ac537b5c1576f19939d4b0846d1fbf1",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
