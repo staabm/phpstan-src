@@ -1,0 +1,27 @@
+turbo-ext/src/FuncCallHandler.cpp
+  s_76a6e3e2c78fc8::t_3122b3b71e90fd 1476,1488
+src/Analyser/ArgumentsHandler.php
+  s_76a6e3e2c78fc8::t_3122b3b71e90fd 64,657,660-661,663-666
+  s_76a6e3e2c78fc8::t_badc2e62a82ace 658-659,662
+turbo-ext/src/ArgumentsHandler.cpp
+  s_76a6e3e2c78fc8::t_3122b3b71e90fd 2155,2167
+src/Analyser/ExprHandler/FuncCallHandler.php
+  s_76a6e3e2c78fc8::t_badc2e62a82ace 197-198,201
+  s_76a6e3e2c78fc8::t_3122b3b71e90fd 88,196,199-200,202-205
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f4d50c009a45cfed42083afef262e7ab9dd0eee5",
+  "prompts": {},
+  "sessions": {
+    "s_76a6e3e2c78fc8": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "bffc054c-ea02-4d9f-ad39-665118286ecf",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
