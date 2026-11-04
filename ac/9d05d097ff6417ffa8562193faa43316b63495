@@ -1,0 +1,28 @@
+src/Reflection/Assertions.php
+  s_4e30d2edc3de50::t_323df25c7ec85a 68-78,88-98
+turbo-ext/src/Assertions.cpp
+  s_4e30d2edc3de50::t_73ad86aac699c7 362-365
+  s_4e30d2edc3de50::t_cb237734fdc3a0 7-8,145,150,153,158,354-355,357-360,366-379,381
+  s_4e30d2edc3de50::t_2bfa74b1591fa5 171
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ac9d05d097ff6417ffa8562193faa43316b63495",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  },
+  "sessions": {
+    "s_4e30d2edc3de50": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "9bfc3a87-4a9d-4004-b186-689f97bf681e",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
