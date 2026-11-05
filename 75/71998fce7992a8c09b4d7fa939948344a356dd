@@ -1,0 +1,19 @@
+src/Analyser/Analyser.php
+  s_244a2720c57d3e::t_c9defa640b9349 93-101,103-105,107-109,112-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7571998fce7992a8c09b4d7fa939948344a356dd",
+  "prompts": {},
+  "sessions": {
+    "s_244a2720c57d3e": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "934cecd6-ea8e-4e53-b23e-004268b6f937",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
