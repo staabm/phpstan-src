@@ -1,0 +1,25 @@
+src/Rules/PhpDoc/WrongVariableNameInVarTagRule.php
+  s_244a2720c57d3e::t_f5cebf40b5ec67 221-223,245-247
+src/Parallel/WorkerRunner.php
+  s_244a2720c57d3e::t_48329fb0c2cd41 221-226,234-236
+src/Analyser/StmtHandler/ForeachHandler.php
+  s_244a2720c57d3e::t_48329fb0c2cd41 595-597
+src/Analyser/NodeScopeResolver.php
+  s_244a2720c57d3e::t_48329fb0c2cd41 974-976
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d3cfd617b1ccb3b2b7924c82af89ac7a56de31d5",
+  "prompts": {},
+  "sessions": {
+    "s_244a2720c57d3e": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "934cecd6-ea8e-4e53-b23e-004268b6f937",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
