@@ -1,0 +1,25 @@
+.github/workflows/claude-react-on-review.yml
+  s_9d2484aa5def0c::t_7b1e77775c17ca 32-33,36,42
+  s_9d2484aa5def0c::t_68b8f4434d2410 10-11,23-31,34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bd68b2d92cc7c2e1ea4e3cef1057c236fa33cbe7",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  },
+  "sessions": {
+    "s_9d2484aa5def0c": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "bfeaba0b-3433-43e7-b2bc-b8937e2dc8aa",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
