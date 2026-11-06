@@ -1,0 +1,14 @@
+.github/workflows/claude-react-on-review.yml
+  h_53f8f6db02589e 21-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bd48dd511ee4e2b5df45d290b441918ed08aa425",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
