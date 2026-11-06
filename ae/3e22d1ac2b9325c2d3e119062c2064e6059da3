@@ -1,0 +1,14 @@
+src/Analyser/ResultCache/ResultCacheValueExtension.php
+  h_53f8f6db02589e 43-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ae3e22d1ac2b9325c2d3e119062c2064e6059da3",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
