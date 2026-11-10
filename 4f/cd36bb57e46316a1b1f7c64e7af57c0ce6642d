@@ -1,0 +1,14 @@
+tests/PHPStan/Rules/Functions/ReplaceCountMismatchRuleTest.php
+  h_53f8f6db02589e 54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4fcd36bb57e46316a1b1f7c64e7af57c0ce6642d",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
