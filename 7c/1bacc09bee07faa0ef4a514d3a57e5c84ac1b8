@@ -1,0 +1,31 @@
+tests/PHPStan/Rules/Api/NodeConnectingVisitorAttributesRuleTest.php
+  h_53f8f6db02589e 34
+  s_25efc9a9ed1bf3::t_973897ce100ce0 32-33,35-36
+src/Rules/Api/NodeConnectingVisitorAttributesRule.php
+  s_25efc9a9ed1bf3::t_cafb2a0950322f 51
+  s_25efc9a9ed1bf3::t_2b34740b4905c3 50
+  h_53f8f6db02589e 7
+tests/PHPStan/Rules/Api/data/node-connecting-visitor.php
+  h_53f8f6db02589e 25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7c1bacc09bee07faa0ef4a514d3a57e5c84ac1b8",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  },
+  "sessions": {
+    "s_25efc9a9ed1bf3": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1794328899770",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
