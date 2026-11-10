@@ -1,0 +1,14 @@
+tests/PHPStan/Rules/Api/data/node-connecting-visitor.php
+  h_53f8f6db02589e 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e017d6b7282868e025d92616a5d039cef7d13854",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
