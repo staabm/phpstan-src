@@ -1,0 +1,30 @@
+tests/PHPStan/Rules/Functions/ReplaceCountMismatchRuleTest.php
+  s_25efc9a9ed1bf3::t_3ea68a207c9c55 62-63,65
+  h_53f8f6db02589e 64
+tests/PHPStan/Rules/Functions/data/bug-3889-named-args.php
+  h_53f8f6db02589e 7
+  s_25efc9a9ed1bf3::t_079be45b1ae645 12-13
+  s_25efc9a9ed1bf3::t_d60e26a6e5c4fe 14
+  s_25efc9a9ed1bf3::t_76a37f2d3e0f72 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1a2ff1fff40af57e4389f8c33c9dfe08a07e6b0e",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  },
+  "sessions": {
+    "s_25efc9a9ed1bf3": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1794328899770",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
