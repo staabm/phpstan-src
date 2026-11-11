@@ -1,0 +1,28 @@
+tests/PHPStan/Rules/Functions/data/bug-3889-named-args.php
+  h_53f8f6db02589e 16
+  s_25efc9a9ed1bf3::t_569e28884a890e 17
+  s_25efc9a9ed1bf3::t_5f643f873d6e1e 19
+  s_25efc9a9ed1bf3::t_1facb5cbcb06da 18
+  h_53f8f6db02589e 15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b402ff40f08a2dc2a594ae526447290872a4e282",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  },
+  "sessions": {
+    "s_25efc9a9ed1bf3": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1794328899770",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
