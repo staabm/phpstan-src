@@ -1,0 +1,25 @@
+src/Analyser/ArgumentsNormalizer.php
+  h_53f8f6db02589e 300,302-303
+  s_25efc9a9ed1bf3::t_bbcec26cd3c659 301
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "76d39a737f8b86a0d55b72fce5b593d6c66b3e75",
+  "prompts": {},
+  "humans": {
+    "h_53f8f6db02589e": {
+      "author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  },
+  "sessions": {
+    "s_25efc9a9ed1bf3": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1794328899770",
+        "model": "unknown"
+      },
+      "human_author": "Markus Staab <markus.staab@redaxo.de>"
+    }
+  }
+}
