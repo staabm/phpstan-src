@@ -12,6 +12,7 @@ use function array_keys;
 use function in_array;
 use function sprintf;
 use function str_starts_with;
+use function strtolower;
 
 /**
  * @implements Rule<Node\Expr\FuncCall>
@@ -39,12 +40,12 @@ final class RuntimeReflectionFunctionRule implements Rule
 			return [];
 		}
 
-		if (!$this->reflectionProvider->hasFunction($node->name, $scope)) {
+		$functionName = $this->reflectionProvider->resolveFunctionName($node->name, $scope);
+		if ($functionName === null) {
 			return [];
 		}
-
-		$functionReflection = $this->reflectionProvider->getFunction($node->name, $scope);
-		if (!in_array($functionReflection->getName(), [
+		$functionName = strtolower($functionName);
+		if (!in_array($functionName, [
 			'is_a',
 			'is_subclass_of',
 			'class_parents',
@@ -70,7 +71,7 @@ final class RuntimeReflectionFunctionRule implements Rule
 
 		return [
 			RuleErrorBuilder::message(
-				sprintf('Function %s() is a runtime reflection concept that might not work in PHPStan because it uses fully static reflection engine. Use objects retrieved from ReflectionProvider instead.', $functionReflection->getName()),
+				sprintf('Function %s() is a runtime reflection concept that might not work in PHPStan because it uses fully static reflection engine. Use objects retrieved from ReflectionProvider instead.', $functionName),
 			)->identifier('phpstanApi.runtimeReflection')->build(),
 		];
 	}

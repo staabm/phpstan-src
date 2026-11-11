@@ -20,6 +20,7 @@ use function in_array;
 use function max;
 use function min;
 use function sprintf;
+use function strtolower;
 
 /**
  * @implements Rule<Node\Expr\FuncCall>
@@ -46,12 +47,11 @@ final class PrintfArrayParametersRule implements Rule
 			return [];
 		}
 
-		if (!$this->reflectionProvider->hasFunction($node->name, $scope)) {
+		$name = $this->reflectionProvider->resolveFunctionName($node->name, $scope);
+		if ($name === null) {
 			return [];
 		}
-
-		$functionReflection = $this->reflectionProvider->getFunction($node->name, $scope);
-		$name = $functionReflection->getName();
+		$name = strtolower($name);
 		if (!in_array($name, ['vprintf', 'vsprintf'], true)) {
 			return [];
 		}

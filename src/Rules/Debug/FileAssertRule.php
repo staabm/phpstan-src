@@ -16,6 +16,7 @@ use PHPStan\Type\VerbosityLevel;
 use function count;
 use function is_string;
 use function sprintf;
+use function strtolower;
 
 /**
  * @implements Rule<Node\Expr\FuncCall>
@@ -46,24 +47,24 @@ final class FileAssertRule implements Rule
 			return [];
 		}
 
-		if (!$this->reflectionProvider->hasFunction($node->name, $scope)) {
+		$functionName = $this->reflectionProvider->resolveFunctionName($node->name, $scope);
+		if ($functionName === null) {
 			return [];
 		}
-
-		$function = $this->reflectionProvider->getFunction($node->name, $scope);
-		if ($function->getName() === 'PHPStan\\Testing\\assertType') {
+		$functionName = strtolower($functionName);
+		if ($functionName === 'phpstan\\testing\\asserttype') {
 			return $this->processAssertType($node->getArgs(), $scope);
 		}
 
-		if ($function->getName() === 'PHPStan\\Testing\\assertNativeType') {
+		if ($functionName === 'phpstan\\testing\\assertnativetype') {
 			return $this->processAssertNativeType($node->getArgs(), $scope);
 		}
 
-		if ($function->getName() === 'PHPStan\\Testing\\assertSuperType') {
+		if ($functionName === 'phpstan\\testing\\assertsupertype') {
 			return $this->processAssertSuperType($node->getArgs(), $scope);
 		}
 
-		if ($function->getName() === 'PHPStan\\Testing\\assertVariableCertainty') {
+		if ($functionName === 'phpstan\\testing\\assertvariablecertainty') {
 			return $this->processAssertVariableCertainty($node->getArgs(), $scope);
 		}
 
